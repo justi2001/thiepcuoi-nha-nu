@@ -292,6 +292,7 @@ window.submitTanaRsvp = async function() {
     const formWrap = document.getElementById('tana-form-inner');
     const successView = document.getElementById('tana-success-view');
     const successMsg = document.getElementById('tana-success-msg');
+    const autoRedirectText = document.getElementById('tana-auto-redirect-note');
 
     if (formWrap) formWrap.style.display = 'none';
     if (successView) successView.style.display = 'flex';
@@ -305,43 +306,110 @@ window.submitTanaRsvp = async function() {
         successMsg.textContent = 'Hẹn gặp bạn tại buổi tiệc vào 11:00 ngày 17.11.2026. Sự hiện diện của bạn là niềm hạnh phúc lớn của hai gia đình!';
       }
     }
+
+    // Auto transition to invitation after 2.5s with countdown indicator
+    if (autoRedirectText) {
+      let countdown = 3;
+      autoRedirectText.textContent = `Tự động chuyển đến thiệp mời sau ${countdown}s...`;
+      const timer = setInterval(() => {
+        countdown--;
+        if (countdown > 0) {
+          autoRedirectText.textContent = `Tự động chuyển đến thiệp mời sau ${countdown}s...`;
+        } else {
+          clearInterval(timer);
+          const rsvpScreen = document.getElementById('tana-rsvp-screen');
+          if (rsvpScreen && !rsvpScreen.classList.contains('is-hidden')) {
+            window.openWeddingInvitation(null, true);
+          }
+        }
+      }, 1000);
+    }
   }, 400);
 };
 
-// Transition from RSVP front page to opening cover invitation (giao diện MỞ THIỆP)
-window.openWeddingInvitation = function(e) {
-  if (e && e.preventDefault) e.preventDefault();
-
+// Navigation logic with HTML5 History API (Back/Forward browser buttons support)
+window.navigateToScreen = function(screenName, pushHistory = true) {
   const rsvpScreen = document.getElementById('tana-rsvp-screen');
-  if (rsvpScreen) {
-    rsvpScreen.classList.add('is-hidden');
-  }
-
-  // Reveal the opening cover screen (#nova-cover) as requested by user
   const novaCover = document.getElementById('nova-cover');
-  if (novaCover) {
-    novaCover.style.display = 'flex';
-    novaCover.classList.remove('nova-opening');
+
+  if (screenName === 'invitation') {
+    if (pushHistory && window.location.hash !== '#thiep-moi') {
+      const url = new URL(window.location);
+      url.hash = '#thiep-moi';
+      history.pushState({ screen: 'invitation' }, '', url.toString());
+    }
+
+    if (rsvpScreen) {
+      rsvpScreen.classList.add('is-hidden');
+    }
+
+    if (novaCover) {
+      novaCover.style.display = 'flex';
+      novaCover.classList.remove('nova-opening');
+    }
+
+    // Lock body scroll while on opening cover
+    document.body.classList.add('nova-cover-active');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  } else {
+    // screenName === 'rsvp'
+    if (pushHistory && window.location.hash !== '#phuc-dap' && window.location.hash !== '') {
+      const url = new URL(window.location);
+      url.hash = '#phuc-dap';
+      history.pushState({ screen: 'rsvp' }, '', url.toString());
+    }
+
+    if (rsvpScreen) {
+      rsvpScreen.classList.remove('is-hidden');
+      rsvpScreen.scrollTop = 0;
+    }
+
+    // Release cover lock so page scroll isn't disabled when going back
+    document.body.classList.remove('nova-cover-active');
   }
-
-  // Lock body scroll while on opening cover
-  document.body.classList.add('nova-cover-active');
-
-  // Scroll to top smoothly
-  window.scrollTo({ top: 0, behavior: 'instant' });
 };
 
-// Return to RSVP front page from main invitation if needed
-window.openRsvpLanding = function(e) {
+// Transition from RSVP front page to opening cover invitation (giao diện MỞ THIỆP)
+window.openWeddingInvitation = function(e, pushHistory = true) {
   if (e && e.preventDefault) e.preventDefault();
-  const rsvpScreen = document.getElementById('tana-rsvp-screen');
-  if (rsvpScreen) {
-    rsvpScreen.classList.remove('is-hidden');
-    rsvpScreen.scrollTop = 0;
-  }
+  window.navigateToScreen('invitation', pushHistory);
 };
+
+// Return to RSVP front page from main invitation
+window.openRsvpLanding = function(e, pushHistory = true) {
+  if (e && e.preventDefault) e.preventDefault();
+  window.navigateToScreen('rsvp', pushHistory);
+};
+
+// History Routing & popstate handling
+function initNavigationRouting() {
+  const hash = window.location.hash;
+  const path = window.location.pathname;
+
+  if (hash === '#thiep-moi' || path.endsWith('/thiep-moi')) {
+    window.navigateToScreen('invitation', false);
+    history.replaceState({ screen: 'invitation' }, '', window.location.href);
+  } else {
+    window.navigateToScreen('rsvp', false);
+    const url = new URL(window.location);
+    if (!url.hash) url.hash = '#phuc-dap';
+    history.replaceState({ screen: 'rsvp' }, '', url.toString());
+  }
+
+  // Listen for browser Back (<-) and Forward (->) buttons
+  window.addEventListener('popstate', (event) => {
+    const curHash = window.location.hash;
+    const state = event.state;
+    if (curHash === '#thiep-moi' || (state && state.screen === 'invitation')) {
+      window.navigateToScreen('invitation', false);
+    } else {
+      window.navigateToScreen('rsvp', false);
+    }
+  });
+}
 
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
   initTanaGuestFromUrl();
+  initNavigationRouting();
 });
