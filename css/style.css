@@ -1221,10 +1221,11 @@ body {
 
 .card-couple-calligraphy {
   position: static;
-  font-family: 'UVNMoiHong', 'UTM ViceroyJF', cursive;
-  font-size: 32px;
+  font-family: 'The Nautigal', 'Great Vibes', 'UTM ViceroyJF', cursive;
+  font-size: 42px;
+  font-weight: 700;
   color: #8b0000;
-  line-height: 1.3;
+  line-height: 1.25;
   margin-bottom: 8px;
   z-index: 2;
 }
@@ -4662,9 +4663,10 @@ body:has(#qv-lightbox.open) .audio-toggle-btn {
   }
 
   .card-couple-calligraphy {
-    font-size: 27px !important;
+    font-size: 36px !important;
+    font-weight: 700 !important;
     margin-bottom: 6px !important;
-    line-height: 1.3 !important;
+    line-height: 1.25 !important;
   }
 
   .c-divider-mark {

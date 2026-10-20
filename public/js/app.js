@@ -502,8 +502,8 @@ const SCHEDULE_CONFIG = {
     dayText: 'Thứ Ba',
     dateText: '17 . 11 . 2026',
     venueText: 'Tại : TT Tiệc Cưới Queen Bee',
-    addressText: 'Số 20 Láng Hạ, quận Đống Đa, Hà Nội',
-    mapUrl: 'https://maps.google.com/?q=Queen+Bee+20+Láng+Hạ+Đống+Đa+Hà+Nội',
+    addressText: 'Tầng 2, Số 20 Láng Hạ - Phường Láng - Hà Nội',
+    mapUrl: 'https://maps.google.com/?q=Queen+Bee+Tang+2+20+Lang+Ha+Phuong+Lang+Ha+Noi',
     calTitle: 'Lễ Cưới Phú Cường & Vũ Thuỳ Linh (Nhà Gái)',
     calStart: '2026-11-17T11:00:00',
     calEnd: '2026-11-17T15:00:00',
@@ -516,8 +516,8 @@ const SCHEDULE_CONFIG = {
     dayText: 'Thứ Ba',
     dateText: '17 . 11 . 2026',
     venueText: 'Tại : TT Tiệc Cưới Queen Bee',
-    addressText: 'Số 20 Láng Hạ, quận Đống Đa, Hà Nội',
-    mapUrl: 'https://maps.google.com/?q=Queen+Bee+20+Láng+Hạ+Đống+Đa+Hà+Nội',
+    addressText: 'Tầng 2, Số 20 Láng Hạ - Phường Láng - Hà Nội',
+    mapUrl: 'https://maps.google.com/?q=Queen+Bee+Tang+2+20+Lang+Ha+Phuong+Lang+Ha+Noi',
     calTitle: 'Lễ Cưới Phú Cường & Vũ Thuỳ Linh (Nhà Gái)',
     calStart: '2026-11-17T11:00:00',
     calEnd: '2026-11-17T15:00:00',
@@ -561,8 +561,8 @@ function switchSchedule(side) {
   if (dayLbl) dayLbl.textContent = 'Thứ Ba';
   if (dateLbl) dateLbl.textContent = '17 . 11 . 2026';
   if (venueLbl) venueLbl.textContent = 'Tại : Trung Tâm Tiệc Cưới Queen Bee';
-  if (addrLbl) addrLbl.textContent = 'Số 20 Láng Hạ, quận Đống Đa, Hà Nội';
-  if (mapBtn) mapBtn.href = 'https://maps.google.com/?q=Queen+Bee+20+Láng+Hạ+Đống+Đa+Hà+Nội';
+  if (addrLbl) addrLbl.textContent = 'Tầng 2, Số 20 Láng Hạ - Phường Láng - Hà Nội';
+  if (mapBtn) mapBtn.href = 'https://maps.google.com/?q=Queen+Bee+Tang+2+20+Lang+Ha+Phuong+Lang+Ha+Noi';
 
   // 5. Mục tiêu đếm ngược: 11:00 ngày 17/11/2026
   scheduleCountdownTarget = new Date('2026-11-17T11:00:00+07:00').getTime();
