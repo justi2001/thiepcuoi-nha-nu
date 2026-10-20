@@ -742,6 +742,14 @@ function applySuggestedWish(btn) {
   if (textarea) {
     textarea.value = btn.textContent.trim();
     textarea.focus();
+    const tanaWish = document.getElementById('tana-wish-text');
+    if (tanaWish) tanaWish.value = textarea.value;
+    const innerNote = document.getElementById('rsvp-note');
+    if (innerNote) innerNote.value = textarea.value;
+    try {
+      sessionStorage.setItem('wedding_guest_wish', textarea.value);
+      localStorage.setItem('wedding_guest_wish', textarea.value);
+    } catch (e) {}
   }
 }
 

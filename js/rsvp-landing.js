@@ -53,21 +53,25 @@ function initTanaGuestFromUrl() {
 }
 
 // ==========================================
-// FORM SYNCHRONIZATION: FRONT PAGE -> INNER RSVP FORM
+// FORM SYNCHRONIZATION: FRONT PAGE -> INNER RSVP & WISHES FORM
 // ==========================================
 window.syncTanaToInnerRsvp = function() {
   try {
-    // 1. Đồng bộ Họ và tên
+    // 1. Đồng bộ Họ và tên sang Form RSVP nội bộ và Form Gửi Lời Chúc (Sổ lưu bút)
     const tanaNameInp = document.getElementById('rsvp-tana-name');
     const innerNameInp = document.getElementById('rsvp-name');
-    const wishNameInp = document.getElementById('wish-name');
+    const wishAuthorInp = document.getElementById('wish-author') || document.getElementById('wish-name');
+    const novaGuest = document.getElementById('nova-guest-name');
     const currentName = tanaNameInp ? tanaNameInp.value.trim() : '';
 
-    if (innerNameInp && currentName) {
-      innerNameInp.value = currentName;
-    }
-    if (wishNameInp && currentName && !wishNameInp.value) {
-      wishNameInp.value = currentName;
+    if (currentName) {
+      if (innerNameInp) innerNameInp.value = currentName;
+      if (wishAuthorInp) wishAuthorInp.value = currentName;
+      if (novaGuest) novaGuest.textContent = currentName;
+      try {
+        sessionStorage.setItem('wedding_guest_name', currentName);
+        localStorage.setItem('wedding_guest_name', currentName);
+      } catch (e) {}
     }
 
     // 2. Đồng bộ Trạng thái tham dự (Có tham gia / Bận không tham gia)
@@ -107,11 +111,19 @@ window.syncTanaToInnerRsvp = function() {
       }
     }
 
-    // 5. Đồng bộ Lời chúc sang Sổ lưu bút
+    // 5. Đồng bộ Lời chúc sang Sổ lưu bút (Section 11) & Ghi chú RSVP
     const wishTextInp = document.getElementById('tana-wish-text');
     const innerWishInp = document.getElementById('wish-message');
-    if (wishTextInp && innerWishInp && wishTextInp.value.trim()) {
-      innerWishInp.value = wishTextInp.value.trim();
+    const innerRsvpNote = document.getElementById('rsvp-note');
+    const currentWish = wishTextInp ? wishTextInp.value : '';
+
+    if (currentWish) {
+      if (innerWishInp) innerWishInp.value = currentWish;
+      if (innerRsvpNote) innerRsvpNote.value = currentWish;
+      try {
+        sessionStorage.setItem('wedding_guest_wish', currentWish);
+        localStorage.setItem('wedding_guest_wish', currentWish);
+      } catch (e) {}
     }
   } catch (err) {
     console.warn('syncTanaToInnerRsvp error:', err);
@@ -402,6 +414,11 @@ window.submitTanaRsvp = async function() {
 
 // Navigation logic with HTML5 History API (Back/Forward browser buttons support)
 window.navigateToScreen = function(screenName, pushHistory = true) {
+  // Always trigger synchronization between all forms
+  if (typeof window.syncTanaToInnerRsvp === 'function') {
+    window.syncTanaToInnerRsvp();
+  }
+
   const rsvpScreen = document.getElementById('tana-rsvp-screen');
   const novaCover = document.getElementById('nova-cover');
 
@@ -445,6 +462,9 @@ window.navigateToScreen = function(screenName, pushHistory = true) {
 // Transition from RSVP front page to opening cover invitation (giao diện MỞ THIỆP)
 window.openWeddingInvitation = function(e, pushHistory = true) {
   if (e && e.preventDefault) e.preventDefault();
+  if (typeof window.syncTanaToInnerRsvp === 'function') {
+    window.syncTanaToInnerRsvp();
+  }
   window.navigateToScreen('invitation', pushHistory);
 };
 
@@ -484,29 +504,90 @@ function initNavigationRouting() {
 // Listen for real-time input changes to synchronize both forms instantly
 function initTanaFormSync() {
   const tanaName = document.getElementById('rsvp-tana-name');
-  if (tanaName) {
-    tanaName.addEventListener('input', window.syncTanaToInnerRsvp);
-    tanaName.addEventListener('change', window.syncTanaToInnerRsvp);
-  }
-
   const otherCount = document.getElementById('tana-guest-other-input');
-  if (otherCount) {
-    otherCount.addEventListener('input', window.syncTanaToInnerRsvp);
-    otherCount.addEventListener('change', window.syncTanaToInnerRsvp);
-  }
-
   const tanaWish = document.getElementById('tana-wish-text');
-  if (tanaWish) {
-    tanaWish.addEventListener('input', window.syncTanaToInnerRsvp);
+  const innerName = document.getElementById('rsvp-name');
+  const wishAuthor = document.getElementById('wish-author');
+  const wishMsg = document.getElementById('wish-message');
+
+  // Khôi phục từ storage nếu có
+  try {
+    const savedName = localStorage.getItem('wedding_guest_name') || sessionStorage.getItem('wedding_guest_name');
+    const savedWish = localStorage.getItem('wedding_guest_wish') || sessionStorage.getItem('wedding_guest_wish');
+
+    if (savedName) {
+      if (tanaName && !tanaName.value) tanaName.value = savedName;
+      if (innerName && !innerName.value) innerName.value = savedName;
+      if (wishAuthor && !wishAuthor.value) wishAuthor.value = savedName;
+    }
+    if (savedWish) {
+      if (tanaWish && !tanaWish.value) tanaWish.value = savedWish;
+      if (wishMsg && !wishMsg.value) wishMsg.value = savedWish;
+    }
+  } catch (e) {}
+
+  if (tanaName) {
+    ['input', 'change', 'blur'].forEach(evt => {
+      tanaName.addEventListener(evt, window.syncTanaToInnerRsvp);
+    });
   }
 
-  // 2-way sync: typing in inner RSVP form also updates landing form
-  const innerName = document.getElementById('rsvp-name');
+  if (otherCount) {
+    ['input', 'change', 'blur'].forEach(evt => {
+      otherCount.addEventListener(evt, window.syncTanaToInnerRsvp);
+    });
+  }
+
+  if (tanaWish) {
+    ['input', 'change', 'blur'].forEach(evt => {
+      tanaWish.addEventListener(evt, window.syncTanaToInnerRsvp);
+    });
+  }
+
+  // 2-way sync: gõ ở Sổ lưu bút (Section 11) -> cập nhật Form trang đầu & Inner RSVP
+  if (wishAuthor) {
+    ['input', 'change', 'blur'].forEach(evt => {
+      wishAuthor.addEventListener(evt, () => {
+        const val = wishAuthor.value.trim();
+        if (val) {
+          if (tanaName) tanaName.value = val;
+          if (innerName) innerName.value = val;
+          try {
+            sessionStorage.setItem('wedding_guest_name', val);
+            localStorage.setItem('wedding_guest_name', val);
+          } catch (e) {}
+        }
+      });
+    });
+  }
+
+  if (wishMsg) {
+    ['input', 'change', 'blur'].forEach(evt => {
+      wishMsg.addEventListener(evt, () => {
+        const val = wishMsg.value;
+        if (tanaWish) tanaWish.value = val;
+        try {
+          sessionStorage.setItem('wedding_guest_wish', val);
+          localStorage.setItem('wedding_guest_wish', val);
+        } catch (e) {}
+      });
+    });
+  }
+
+  // 2-way sync: gõ ở Form RSVP nội bộ -> cập nhật Form trang đầu & Sổ lưu bút
   if (innerName) {
-    innerName.addEventListener('input', () => {
-      if (tanaName && innerName.value) {
-        tanaName.value = innerName.value;
-      }
+    ['input', 'change', 'blur'].forEach(evt => {
+      innerName.addEventListener(evt, () => {
+        const val = innerName.value.trim();
+        if (val) {
+          if (tanaName) tanaName.value = val;
+          if (wishAuthor) wishAuthor.value = val;
+          try {
+            sessionStorage.setItem('wedding_guest_name', val);
+            localStorage.setItem('wedding_guest_name', val);
+          } catch (e) {}
+        }
+      });
     });
   }
 
