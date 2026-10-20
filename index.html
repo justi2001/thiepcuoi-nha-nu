@@ -429,11 +429,6 @@
         <h2 class="tabs-main-title qv-anim-fade-down">Thiệp Mời</h2>
         <p class="tabs-sub-title qv-anim-fade-up qv-delay-1">Trân trọng kính mời!</p>
 
-        <!-- Tabs Button Group -->
-        <div class="tabs-btn-group qv-anim-fade-up qv-delay-2" style="margin-top: 15px;">
-          <button type="button" id="btn-tab-nhagai" class="tab-pill-btn active" onclick="switchCard('nhagai')">Tiệc Cưới Nhà Gái</button>
-          <button type="button" id="btn-tab-nhatrai" class="tab-pill-btn" onclick="switchCard('nhatrai')">Tiệc Cưới Nhà Trai</button>
-        </div>
       </div>
     </section>
 
@@ -523,91 +518,7 @@
       </div>
     </section>
 
-    <!-- ================= SECTION 3: CARD NHÀ TRAI ================= -->
-    <section id="section-card-nhatrai" class="site-section sec-card card-nhatrai-view" style="display: none;">
-      <div class="section-container card-container">
-        <!-- 2 Linh vật Song Phụng hiển thị hai bên phía sau thiệp (xuất hiện khi cuộn tới và mờ dần khi cuộn tiếp) -->
-        <div class="card-flanking-creatures" aria-hidden="true">
-          <img class="card-creature-item creature-left" src="images/decor/song-phung.png" alt="Song Phụng Trái" />
-          <img class="card-creature-item creature-right" src="images/decor/song-phung.png" alt="Song Phụng Phải" />
-        </div>
 
-        <!-- Parchment Card Frame Box -->
-        <div class="card-parchment-frame qv-anim-card-unfold">
-          <div class="card-inner-gold-border" aria-hidden="true"></div>
-
-          <div class="c-save-the-date">SAVE THE DATE</div>
-
-          <!-- Couple Photo in Center of Frame -->
-          <div class="card-photo-wrapper qv-anim-card-photo-glide"
-            onclick="openLightboxBySrc('images/wedding/PQD07040.jpg?v=studio_4k')">
-            <img src="images/wedding/PQD07040_card_sharp.jpg?v=studio_4k" alt="Ảnh thiệp cưới Nhà Trai">
-          </div>
-
-          <!-- Names in Red Calligraphy -->
-          <div class="card-couple-calligraphy qv-anim-pop">
-            <span class="c-bride">Thuỳ Linh</span>
-            <span class="c-amp">&amp;</span>
-            <span class="c-groom">Phú Cường</span>
-          </div>
-
-          <!-- Parents Info Block -->
-          <div class="card-parents-block qv-anim-fade-up">
-            <div class="c-parent-col c-parent-bride">
-              <div class="c-parent-heading">NHÀ GÁI</div>
-              <div class="c-parent-item"><span class="c-parent-role">Ông:</span> <span class="c-parent-name">Vũ Quốc
-                  Hải</span></div>
-              <div class="c-parent-item"><span class="c-parent-role">Bà:</span> <span class="c-parent-name">Nguyễn Thị
-                  Ngân Hà</span></div>
-            </div>
-            <div class="c-parent-divider" aria-hidden="true"></div>
-            <div class="c-parent-col c-parent-groom">
-              <div class="c-parent-heading">NHÀ TRAI</div>
-              <div class="c-parent-item"><span class="c-parent-role">Ông:</span> <span class="c-parent-name">Nguyễn Văn
-                  Yến</span></div>
-              <div class="c-parent-item"><span class="c-parent-role">Bà:</span> <span class="c-parent-name">Nguyễn Thị
-                  Lý</span></div>
-            </div>
-          </div>
-
-          <!-- Delicate Divider Mark -->
-          <div class="c-divider-mark">✦ &nbsp; · &nbsp; ✦</div>
-
-          <div class="c-invite-label qv-anim-fade-up">TRÂN TRỌNG KÍNH MỜI</div>
-          <div class="c-desc qv-anim-fade-up">Đến dự buổi tiệc chung vui cùng gia đình chúng tôi</div>
-
-          <!-- English Date in DinhHon Font -->
-          <div class="c-date-en qv-anim-fade-left">Friday, 13 November, 2026</div>
-
-          <!-- Vietnamese Date -->
-          <div class="c-date-vi qv-anim-fade-right">15:30 Thứ 6, ngày 13.11.2026 (05.10 Bính Ngọ)</div>
-
-          <!-- Venue & Address -->
-          <div class="c-venue-name qv-anim-fade-up">Tư gia nhà Trai</div>
-          <div class="c-venue-address qv-anim-fade-up">7 Trại Ro, Kiều Phú, Hà Nội<span class="c-old-addr">(địa chỉ cũ:
-              Đội 7, thôn Ro, xã Tuyết Nghĩa, Quốc Oai, Hà Nội)</span></div>
-
-          <!-- 2 Action Buttons inside Card Frame -->
-          <div class="card-buttons-row qv-anim-pop">
-            <button type="button" class="btn-card-action"
-              onclick="addToGoogleCalendar('Tiệc Cưới Phú Cường & Thuỳ Linh (Nhà Trai)', '2026-11-13T15:30:00', '2026-11-14T14:00:00', '7 Trại Ro, Kiều Phú, Hà Nội')">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-                <path
-                  d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z" />
-              </svg>
-              <span>Thêm vào lịch</span>
-            </button>
-            <a href="https://maps.app.goo.gl/24vpujPqPadg79RE7" target="_blank" rel="noopener" class="btn-card-action">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-                <path
-                  d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-              </svg>
-              <span>Chỉ đường</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- ================= SECTION 4: RSVP FORM ================= -->
     <section id="section-rsvp" class="site-section sec-rsvp">
