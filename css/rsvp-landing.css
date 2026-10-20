@@ -1,0 +1,671 @@
+/* =====================================================================
+   TANAWEDDING STYLE RSVP FRONT PAGE (NHÀ GÁI - PHÚC ĐÁP)
+   Matches https://wedding.tanawedding.workers.dev/nha-gai/phuc-dap
+   ===================================================================== */
+
+:root {
+  --tana-bg: #fff7fa;
+  --tana-bg-soft: #fdf0f5;
+  --tana-bg-input: #fffafb;
+  --tana-ink-primary: #854762;
+  --tana-ink-body: #634652;
+  --tana-ink-muted: #806774;
+  --tana-ink-faint: #927684;
+  --tana-accent: #a45776;
+  --tana-accent-rose: #bb7895;
+  --tana-border: #eadce2;
+  --tana-border-soft: #f2e3e9;
+  --tana-btn-grad: linear-gradient(135deg, #b9688b 0%, #934866 100%);
+}
+
+/* Fullscreen Overlay / First Page Container */
+#tana-rsvp-screen {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999999;
+  background-color: var(--tana-bg);
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--tana-ink-body);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s ease;
+  visibility: visible;
+  opacity: 1;
+}
+
+#tana-rsvp-screen.is-hidden {
+  opacity: 0;
+  transform: scale(0.98) translateY(-10px);
+  pointer-events: none;
+  visibility: hidden;
+  display: none !important;
+}
+
+/* Main Standalone Page Container */
+.rsvp-standalone-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  box-sizing: border-box;
+  padding: 24px 20px 60px;
+  max-width: 1140px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.rsvp-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto 32px;
+  padding: 6px 0;
+}
+
+.rsvp-nav-brand {
+  font-family: 'Charm', cursive;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--tana-ink-primary);
+  text-decoration: none;
+  letter-spacing: 0;
+  transition: opacity 0.2s ease;
+  display: inline-block;
+}
+
+.rsvp-nav-brand:hover {
+  opacity: 0.85;
+}
+
+.rsvp-back-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border: 1px solid var(--tana-border);
+  border-radius: 9999px;
+  background: #ffffff;
+  color: var(--tana-ink-primary);
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 8px rgba(133, 71, 98, 0.05);
+}
+
+.rsvp-back-link:hover {
+  background: var(--tana-bg-soft);
+  border-color: var(--tana-accent-rose);
+  color: var(--tana-ink-primary);
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 14px rgba(133, 71, 98, 0.12);
+}
+
+/* Two Column Layout */
+.rsvp-page-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 48px;
+  max-width: 1100px;
+  width: 100%;
+  margin: auto;
+  align-items: start;
+}
+
+/* Left Hero Card */
+.rsvp-hero-card {
+  position: sticky;
+  top: 32px;
+  text-align: center;
+  padding: 36px 12px;
+  margin: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.rsvp-super-title {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--tana-accent);
+  margin-bottom: 22px;
+}
+
+.rsvp-main-heading {
+  font-family: 'Charm', cursive;
+  font-style: normal;
+  font-size: clamp(44px, 4.8vw, 62px);
+  line-height: 1.25;
+  margin: 0 0 24px;
+  color: var(--tana-ink-primary);
+  font-weight: 700;
+}
+
+.rsvp-main-heading .hero-name-line {
+  display: block;
+}
+
+.rsvp-main-heading .amp {
+  display: block;
+  font-size: 30px;
+  color: var(--tana-accent-rose);
+  margin: 6px 0;
+  font-family: 'Charm', cursive;
+}
+
+.rsvp-guest-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: #f9eaf0;
+  border-radius: 9999px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: var(--tana-ink-primary);
+}
+
+.rsvp-guest-tag .tag-prefix {
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+.rsvp-guest-tag .tag-name {
+  font-weight: 700;
+}
+
+.rsvp-card-sub {
+  font-size: 15px;
+  line-height: 1.85;
+  max-width: 360px;
+  margin: 0 auto 24px;
+  color: var(--tana-ink-muted);
+}
+
+.rsvp-meta-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--tana-ink-muted);
+}
+
+.rsvp-meta-info .meta-highlight {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--tana-ink-primary);
+  margin-bottom: 4px;
+}
+
+.rsvp-meta-info .meta-sep {
+  display: none;
+}
+
+.rsvp-side-tag {
+  display: inline-block;
+  background: #f6e5ed;
+  color: var(--tana-ink-primary);
+  border-radius: 9999px;
+  padding: 8px 20px;
+  margin: 26px auto 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+/* Right Card Container */
+.rsvp-card-container {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: clamp(28px, 4vw, 44px);
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 16px 48px rgba(130, 68, 94, 0.07), 0 2px 10px rgba(130, 68, 94, 0.03);
+  border: 1px solid rgba(234, 220, 226, 0.6);
+}
+
+/* Form Inner */
+.rsvp-stationery-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.rsvp-form-header {
+  text-align: center;
+  padding: 0 0 20px;
+  border-bottom: 1px solid var(--tana-border-soft);
+  margin-bottom: 4px;
+}
+
+.rsvp-form-kicker {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--tana-accent);
+  margin-bottom: 8px;
+}
+
+.rsvp-form-title {
+  font-family: 'Charm', cursive;
+  font-size: clamp(32px, 3.8vw, 38px);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--tana-ink-primary);
+  margin: 8px 0;
+}
+
+.rsvp-notice-text {
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--tana-ink-muted);
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+/* Field */
+.rsvp-field {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.rsvp-label {
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--tana-ink-body);
+}
+
+.rsvp-field legend {
+  float: none;
+  width: 100%;
+  padding: 0;
+}
+
+.rsvp-label .req {
+  color: #c4385a;
+  font-weight: 700;
+  margin-left: 2px;
+}
+
+.rsvp-input-text {
+  width: 100%;
+  min-height: 52px;
+  padding: 13px 18px;
+  border: 1.5px solid var(--tana-border);
+  border-radius: 14px;
+  background: var(--tana-bg-input);
+  font: 400 15px/1.5 'Be Vietnam Pro', sans-serif;
+  color: var(--tana-ink-body);
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.rsvp-input-text::placeholder {
+  color: #a58f99;
+  font-size: 14px;
+}
+
+.rsvp-input-text:focus {
+  background: #ffffff;
+  border-color: #b9688b;
+  outline: none;
+  box-shadow: 0 0 0 3.5px rgba(185, 104, 139, 0.15);
+}
+
+textarea.rsvp-input-text {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Options Layouts */
+.rsvp-options-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rsvp-options-grid-three {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.rsvp-options-grid-two {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+/* Radio Card Item */
+.rsvp-radio-card {
+  position: relative;
+  min-width: 0;
+  min-height: 54px;
+  padding: 13px 16px;
+  border: 1.5px solid #eee2e7;
+  border-radius: 14px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+  user-select: none;
+}
+
+.rsvp-radio-card:hover {
+  background: var(--tana-bg);
+  border-color: #d9aec0;
+}
+
+.rsvp-radio-card.checked {
+  background: var(--tana-bg-soft);
+  border-color: var(--tana-accent-rose);
+  box-shadow: 0 2px 8px rgba(187, 120, 149, 0.1);
+}
+
+.rsvp-radio-card input[type="radio"] {
+  display: block;
+  margin: 0;
+  width: 18px;
+  height: 18px;
+  accent-color: var(--tana-ink-primary);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.rsvp-radio-card .radio-text-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.rsvp-radio-card .option-title {
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--tana-ink-body);
+}
+
+.rsvp-radio-card .option-sub {
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: var(--tana-ink-faint);
+  margin-top: 2px;
+}
+
+/* Guest count style card */
+.rsvp-radio-card.count-style {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  text-align: center;
+  padding: 14px 10px;
+  min-height: 64px;
+}
+
+.rsvp-radio-card.count-style input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.rsvp-radio-card.count-style .count-number {
+  font: 700 14px/1.4 'Be Vietnam Pro', sans-serif;
+  color: var(--tana-ink-body);
+  white-space: nowrap;
+}
+
+.rsvp-radio-card.count-style .count-desc {
+  font-size: 11.5px;
+  color: var(--tana-ink-faint);
+}
+
+/* Other inputs wrapper */
+.other-input-block {
+  padding: 14px;
+  background: var(--tana-bg);
+  border-radius: 12px;
+  margin-top: 4px;
+  border: 1px dashed var(--tana-border);
+}
+
+.other-input-block .sub-label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--tana-ink-muted);
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+/* Errors & Notices */
+.field-error {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #c4385a;
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+.form-notice {
+  border-radius: 12px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  padding: 12px 16px;
+  margin: 0;
+}
+
+.form-notice.error {
+  background: #fdf0f0;
+  color: #c4385a;
+  border: 1px solid #fad2d2;
+}
+
+/* Submit Button */
+.rsvp-submit-btn {
+  width: 100%;
+  min-height: 54px;
+  border: none;
+  border-radius: 14px;
+  background: var(--tana-btn-grad);
+  color: #ffffff !important;
+  font: 700 14.5px/1.5 'Be Vietnam Pro', sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(168, 88, 123, 0.22);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.rsvp-submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(168, 88, 123, 0.32);
+  filter: brightness(1.05);
+}
+
+.rsvp-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.rsvp-privacy-note {
+  margin: 0;
+  text-align: center;
+  font-size: 11.5px;
+  line-height: 1.7;
+  color: var(--tana-ink-faint);
+}
+
+/* Success View */
+.rsvp-stationery-success {
+  padding: 24px 8px 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.rsvp-stationery-success .rsvp-watermark {
+  font-family: 'Charm', cursive;
+  font-size: clamp(34px, 4vw, 42px);
+  letter-spacing: 0;
+  color: var(--tana-accent-rose);
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+.rsvp-stationery-success .success-heading {
+  display: block;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--tana-ink-primary);
+  margin-bottom: 12px;
+}
+
+.rsvp-stationery-success .success-paragraph {
+  font-size: 14.5px;
+  line-height: 1.8;
+  color: var(--tana-ink-muted);
+  max-width: 440px;
+  margin: 0 auto 20px;
+}
+
+.rsvp-stationery-success .signature-couple {
+  font-family: 'Charm', cursive;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--tana-ink-primary);
+  margin-bottom: 24px;
+}
+
+/* Footer Bottom Action */
+.rsvp-footer-action {
+  max-width: 1100px;
+  width: 100%;
+  margin: 36px auto 0;
+  text-align: center;
+}
+
+.rsvp-back-bottom-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 32px;
+  border: 1.5px solid var(--tana-border);
+  border-radius: 9999px;
+  background: #ffffff;
+  color: var(--tana-ink-primary);
+  font: 700 13px/1.5 'Be Vietnam Pro', sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 8px rgba(133, 71, 98, 0.05);
+}
+
+.rsvp-back-bottom-btn:hover {
+  background: var(--tana-bg-soft);
+  border-color: var(--tana-accent-rose);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(133, 71, 98, 0.12);
+}
+
+/* Mobile & Tablet Responsive */
+@media (max-width: 880px) {
+  .rsvp-standalone-page {
+    padding: 18px 14px 44px;
+  }
+
+  .rsvp-page-header {
+    margin-bottom: 20px;
+  }
+
+  .rsvp-nav-brand {
+    font-size: 22px;
+  }
+
+  .rsvp-back-link {
+    padding: 8px 16px;
+    font-size: 12.5px;
+  }
+
+  .rsvp-page-layout {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 580px;
+    gap: 24px;
+  }
+
+  .rsvp-hero-card {
+    position: static;
+    padding: 16px 8px 6px;
+  }
+
+  .rsvp-main-heading {
+    font-size: 40px;
+    margin: 12px 0 16px;
+  }
+
+  .rsvp-main-heading .hero-name-line,
+  .rsvp-main-heading .amp {
+    display: inline;
+  }
+
+  .rsvp-main-heading .amp {
+    margin: 0 8px;
+  }
+
+  .rsvp-card-sub {
+    max-width: 400px;
+    margin: 0 auto 16px;
+    font-size: 14.5px;
+  }
+
+  .rsvp-side-tag {
+    margin-top: 18px;
+  }
+
+  .rsvp-card-container {
+    padding: 24px 18px;
+    border-radius: 20px;
+  }
+
+  .rsvp-form-title {
+    font-size: 32px;
+  }
+
+  .rsvp-options-grid-two {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rsvp-footer-action {
+    margin-top: 24px;
+  }
+}
