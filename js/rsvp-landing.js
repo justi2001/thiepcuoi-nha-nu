@@ -49,7 +49,74 @@ function initTanaGuestFromUrl() {
   } catch (err) {
     console.warn('Error parsing guest url:', err);
   }
+  syncTanaToInnerRsvp();
 }
+
+// ==========================================
+// FORM SYNCHRONIZATION: FRONT PAGE -> INNER RSVP FORM
+// ==========================================
+window.syncTanaToInnerRsvp = function() {
+  try {
+    // 1. Đồng bộ Họ và tên
+    const tanaNameInp = document.getElementById('rsvp-tana-name');
+    const innerNameInp = document.getElementById('rsvp-name');
+    const wishNameInp = document.getElementById('wish-name');
+    const currentName = tanaNameInp ? tanaNameInp.value.trim() : '';
+
+    if (innerNameInp && currentName) {
+      innerNameInp.value = currentName;
+    }
+    if (wishNameInp && currentName && !wishNameInp.value) {
+      wishNameInp.value = currentName;
+    }
+
+    // 2. Đồng bộ Trạng thái tham dự (Có tham gia / Bận không tham gia)
+    const att = window.tanaRsvpState.attendance;
+    if (typeof selectAttendance === 'function') {
+      if (att === 'declined') {
+        selectAttendance('Xin lỗi, tôi bận mất rồi');
+      } else {
+        selectAttendance('Có, tôi sẽ tham dự');
+      }
+    }
+
+    // 3. Khách mời: Mặc định là Khách mời Cô Dâu (Thuỳ Linh)
+    const guestOfEl = document.getElementById('rsvp-guest-of');
+    if (guestOfEl) {
+      guestOfEl.value = 'Cô Dâu';
+    }
+
+    // 4. Đồng bộ Số người tham dự
+    const choice = window.tanaRsvpState.guestChoice;
+    const innerCountEl = document.getElementById('rsvp-count');
+    if (innerCountEl) {
+      if (att === 'declined') {
+        innerCountEl.value = '1';
+      } else if (choice === '1') {
+        innerCountEl.value = '1';
+      } else if (choice === '2') {
+        innerCountEl.value = '2';
+      } else if (choice === 'other') {
+        const otherInp = document.getElementById('tana-guest-other-input');
+        const num = parseInt(otherInp ? otherInp.value : '1', 10) || 1;
+        if (num >= 5) {
+          innerCountEl.value = '5+';
+        } else if (num >= 1 && num <= 4) {
+          innerCountEl.value = String(num);
+        }
+      }
+    }
+
+    // 5. Đồng bộ Lời chúc sang Sổ lưu bút
+    const wishTextInp = document.getElementById('tana-wish-text');
+    const innerWishInp = document.getElementById('wish-message');
+    if (wishTextInp && innerWishInp && wishTextInp.value.trim()) {
+      innerWishInp.value = wishTextInp.value.trim();
+    }
+  } catch (err) {
+    console.warn('syncTanaToInnerRsvp error:', err);
+  }
+};
 
 // Attendance selection
 window.selectTanaAttendance = function(labelEl, value) {
@@ -76,6 +143,8 @@ window.selectTanaAttendance = function(labelEl, value) {
 
   const errEl = document.getElementById('tana-attendance-error');
   if (errEl) errEl.style.display = 'none';
+
+  syncTanaToInnerRsvp();
 };
 
 // Count selection
@@ -100,6 +169,8 @@ window.selectTanaCount = function(labelEl, value) {
 
   const errEl = document.getElementById('tana-count-error');
   if (errEl) errEl.style.display = 'none';
+
+  syncTanaToInnerRsvp();
 };
 
 // Relationship selection
@@ -124,6 +195,8 @@ window.selectTanaRelation = function(labelEl, value) {
 
   const errEl = document.getElementById('tana-relation-error');
   if (errEl) errEl.style.display = 'none';
+
+  syncTanaToInnerRsvp();
 };
 
 // Submit form
@@ -408,8 +481,42 @@ function initNavigationRouting() {
   });
 }
 
+// Listen for real-time input changes to synchronize both forms instantly
+function initTanaFormSync() {
+  const tanaName = document.getElementById('rsvp-tana-name');
+  if (tanaName) {
+    tanaName.addEventListener('input', window.syncTanaToInnerRsvp);
+    tanaName.addEventListener('change', window.syncTanaToInnerRsvp);
+  }
+
+  const otherCount = document.getElementById('tana-guest-other-input');
+  if (otherCount) {
+    otherCount.addEventListener('input', window.syncTanaToInnerRsvp);
+    otherCount.addEventListener('change', window.syncTanaToInnerRsvp);
+  }
+
+  const tanaWish = document.getElementById('tana-wish-text');
+  if (tanaWish) {
+    tanaWish.addEventListener('input', window.syncTanaToInnerRsvp);
+  }
+
+  // 2-way sync: typing in inner RSVP form also updates landing form
+  const innerName = document.getElementById('rsvp-name');
+  if (innerName) {
+    innerName.addEventListener('input', () => {
+      if (tanaName && innerName.value) {
+        tanaName.value = innerName.value;
+      }
+    });
+  }
+
+  // Initial sync
+  window.syncTanaToInnerRsvp();
+}
+
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
   initTanaGuestFromUrl();
+  initTanaFormSync();
   initNavigationRouting();
 });
