@@ -172,9 +172,9 @@ const server = http.createServer(async (req, res) => {
         name: String(body.name).trim(),
         email: String(body.email || '').trim(),
         attendance: String(body.attendance || 'Có, tôi sẽ tham dự'),
-        guestOf: String(body.guestOf || 'Chú Rể & Cô Dâu'),
+        guestOf: String(body.guestOf || 'Cô Dâu (Thuỳ Linh)'),
         guestCount: String(body.guestCount || '1'),
-        eventTarget: String(body.eventTarget || 'Tất cả Sự kiện nhà Trai'),
+        eventTarget: String(body.eventTarget || 'Lễ Cưới Nhà Gái (17/11/2026)'),
         submittedAt: new Date().toISOString()
       };
       rsvps.unshift(newRsvp);

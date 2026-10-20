@@ -45,7 +45,7 @@ const ALBUM_IMAGES = [
 
 const GUEST_NOTIFICATIONS = [
   { name: 'Cao Thái Sơn', text: 'Chúc hai bạn vui vẻ, trăm năm hạnh phúc!' },
-  { name: 'Bác Nguyễn Văn Hùng', text: 'vừa xác nhận tham dự tiệc cưới Nhà Trai' },
+  { name: 'Bác Nguyễn Văn Hùng', text: 'vừa xác nhận tham dự tiệc cưới Nhà Gái' },
   { name: 'Cô Nghiêm Kim Oanh', text: 'Chúc hai cháu trăm năm tình viên mãn!' },
   { name: 'Anh Minh Tuấn', text: 'Chúc mừng hạnh phúc hai em Phú Cường & Thuỳ Linh!' },
   { name: 'Bạn Phương Linh', text: 'Chúc hai bạn mãi mãi ngọt ngào, hạnh phúc!' }
@@ -526,55 +526,46 @@ const SCHEDULE_CONFIG = {
 };
 
 function switchSchedule(side) {
-  currentScheduleSide = side;
-  const cfg = SCHEDULE_CONFIG[side];
+  currentScheduleSide = 'bride';
+  const cfg = SCHEDULE_CONFIG['bride'];
   if (!cfg) return;
 
-  // 1. Button active states & title badge
-  const btnGroom = document.getElementById('btn-sched-groom');
-  const btnBride = document.getElementById('btn-sched-bride');
+  // 1. Tiêu đề
   const badgeText = document.getElementById('sched-title-text');
   if (badgeText) {
-    badgeText.textContent = side === 'bride' ? 'LỊCH CƯỚI NHÀ CÔ DÂU' : 'LỊCH CƯỚI NHÀ CHÚ RỂ';
-  }
-  if (side === 'groom') {
-    if (btnGroom) btnGroom.classList.add('active');
-    if (btnBride) btnBride.classList.remove('active');
-  } else {
-    if (btnGroom) btnGroom.classList.remove('active');
-    if (btnBride) btnBride.classList.add('active');
+    badgeText.textContent = 'LỊCH CƯỚI NHÀ CÔ DÂU';
   }
 
-  // 2. Highlight Calendar Days with Hearts
+  // 2. Đánh dấu trái tim ngày 17/11 (duy nhất ngày Nhà Gái)
   const allCells = document.querySelectorAll('.cal-cell[data-day]');
   allCells.forEach(cell => {
     const day = parseInt(cell.getAttribute('data-day'), 10);
-    if (cfg.highlightDays.includes(day)) {
+    if (day === 17) {
       cell.classList.add('has-heart');
     } else {
       cell.classList.remove('has-heart');
     }
   });
 
-  // 3. Subtitle Under Calendar
+  // 3. Phụ đề dưới lịch
   const timeBox = document.getElementById('cal-selected-time');
-  if (timeBox) timeBox.textContent = cfg.selectedTimeText;
+  if (timeBox) timeBox.textContent = '11:00 Thứ 3 ngày 17 thg 11, 2026';
 
-  // 4. Details labels
+  // 4. Thông tin chi tiết địa điểm Nhà Gái
   const dayLbl = document.getElementById('tl-dyn-day');
   const dateLbl = document.getElementById('tl-dyn-date');
   const venueLbl = document.getElementById('tl-dyn-venue');
   const addrLbl = document.getElementById('tl-dyn-address');
   const mapBtn = document.getElementById('tl-btn-map');
 
-  if (dayLbl) dayLbl.textContent = cfg.dayText;
-  if (dateLbl) dateLbl.textContent = cfg.dateText;
-  if (venueLbl) venueLbl.textContent = cfg.venueText;
-  if (addrLbl) addrLbl.textContent = cfg.addressText;
-  if (mapBtn) mapBtn.href = cfg.mapUrl;
+  if (dayLbl) dayLbl.textContent = 'Thứ Ba';
+  if (dateLbl) dateLbl.textContent = '17 . 11 . 2026';
+  if (venueLbl) venueLbl.textContent = 'Tại : Trung Tâm Tiệc Cưới Queen Bee';
+  if (addrLbl) addrLbl.textContent = 'Số 20 Láng Hạ, quận Đống Đa, Hà Nội';
+  if (mapBtn) mapBtn.href = 'https://maps.google.com/?q=Queen+Bee+20+Láng+Hạ+Đống+Đa+Hà+Nội';
 
-  // 5. Countdown target
-  scheduleCountdownTarget = new Date(cfg.targetISO).getTime();
+  // 5. Mục tiêu đếm ngược: 11:00 ngày 17/11/2026
+  scheduleCountdownTarget = new Date('2026-11-17T11:00:00+07:00').getTime();
 }
 
 function addTimelineToCalendar() {
@@ -648,7 +639,7 @@ async function handleRsvpSubmit(e) {
   const quantity = countEl ? (countEl.options[countEl.selectedIndex]?.text || countEl.value) : '1';
 
   const eventTargetEl = document.getElementById('rsvp-event-target') || document.getElementById('rsvp-event');
-  const partyTime = eventTargetEl ? (eventTargetEl.options[eventTargetEl.selectedIndex]?.text || eventTargetEl.value) : 'Tiệc Cưới Nhà Trai';
+  const partyTime = eventTargetEl ? (eventTargetEl.options[eventTargetEl.selectedIndex]?.text || eventTargetEl.value) : 'Tiệc Cưới Nhà Gái';
 
   const noteEl = document.getElementById('rsvp-note');
   const note = noteEl ? noteEl.value.trim() : '';
