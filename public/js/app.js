@@ -462,33 +462,15 @@ function initFallingHearts() {
 }
 
 // ==========================================
-// 5. TAB SWITCHER (NHÀ TRAI / NHÀ GÁI)
+// 5. TAB SWITCHER (NHÀ GÁI)
 // ==========================================
 function switchCard(type) {
-  const btnTrai = document.getElementById('btn-tab-nhatrai');
-  const btnGai = document.getElementById('btn-tab-nhagai');
-  const cardTrai = document.getElementById('section-card-nhatrai');
   const cardGai = document.getElementById('section-card-nhagai');
-
-  if (type === 'nhatrai') {
-    if (btnTrai) btnTrai.classList.add('active');
-    if (btnGai) btnGai.classList.remove('active');
-    if (cardTrai) cardTrai.style.display = 'block';
-    if (cardGai) cardGai.style.display = 'none';
-    if (typeof switchSchedule === 'function') switchSchedule('groom');
-  } else {
-    if (btnTrai) btnTrai.classList.remove('active');
-    if (btnGai) btnGai.classList.add('active');
-    if (cardTrai) cardTrai.style.display = 'none';
-    if (cardGai) cardGai.style.display = 'block';
-    if (typeof switchSchedule === 'function') switchSchedule('bride');
-  }
-
-  const activeCard = type === 'nhatrai' ? cardTrai : cardGai;
-  if (activeCard) {
-    const frame = activeCard.querySelector('.card-parchment-frame');
-    const photo = activeCard.querySelector('.card-photo-wrapper');
-    const animEls = activeCard.querySelectorAll('[class*="qv-anim-"], .qv-reveal, .qv-text-reveal');
+  if (cardGai) {
+    cardGai.style.display = 'block';
+    const frame = cardGai.querySelector('.card-parchment-frame');
+    const photo = cardGai.querySelector('.card-photo-wrapper');
+    const animEls = cardGai.querySelectorAll('[class*="qv-anim-"], .qv-reveal, .qv-text-reveal');
     animEls.forEach(el => el.classList.remove('qv-visible'));
     setTimeout(() => {
       if (frame) frame.classList.add('qv-visible');
@@ -496,6 +478,7 @@ function switchCard(type) {
       animEls.forEach(el => { if (el !== frame && el !== photo) el.classList.add('qv-visible'); });
     }, 40);
   }
+  if (typeof switchSchedule === 'function') switchSchedule('bride');
 
   if (typeof window.refreshScrollReveal === 'function') {
     setTimeout(window.refreshScrollReveal, 40);
@@ -506,27 +489,25 @@ function switchCard(type) {
 }
 
 // ==========================================
-
+// 6. VIP SCHEDULE & COUNTDOWN TIMER (NHÀ GÁI)
 // ==========================================
-// 6. VIP SCHEDULE SWITCHER & COUNTDOWN TIMER
-// ==========================================
-let currentScheduleSide = 'bride'; // Default to Nhà Gái
+let currentScheduleSide = 'bride'; // Luôn mặc định Nhà Gái
 let scheduleCountdownTarget = new Date('2026-11-17T11:00:00+07:00').getTime();
 
 const SCHEDULE_CONFIG = {
   groom: {
-    side: 'groom',
-    targetISO: '2026-11-13T15:30:00+07:00',
-    selectedTimeText: '15:30 Thứ 6 ngày 13 thg 11, 2026',
-    dayText: 'Thứ Sáu & Thứ Bảy',
-    dateText: '13 - 14 . 11 . 2026',
-    venueText: 'Tư gia nhà Trai',
-    addressText: '7 Trại Ro, Kiều Phú, Hà Nội (địa chỉ cũ: Đội 7, thôn Ro, xã Tuyết Nghĩa, Quốc Oai, Hà Nội)',
-    mapUrl: 'https://maps.app.goo.gl/24vpujPqPadg79RE7',
-    calTitle: 'Tiệc Cưới Phú Cường & Vũ Thuỳ Linh (Nhà Trai)',
-    calStart: '2026-11-13T15:30:00',
-    calEnd: '2026-11-14T14:00:00',
-    highlightDays: [13, 14]
+    side: 'bride',
+    targetISO: '2026-11-17T11:00:00+07:00',
+    selectedTimeText: '11:00 Thứ 3 ngày 17 thg 11, 2026',
+    dayText: 'Thứ Ba',
+    dateText: '17 . 11 . 2026',
+    venueText: 'Tại : TT Tiệc Cưới Queen Bee',
+    addressText: 'Số 20 Láng Hạ, quận Đống Đa, Hà Nội',
+    mapUrl: 'https://maps.google.com/?q=Queen+Bee+20+Láng+Hạ+Đống+Đa+Hà+Nội',
+    calTitle: 'Lễ Cưới Vũ Thuỳ Linh & Phú Cường (Nhà Gái)',
+    calStart: '2026-11-17T11:00:00',
+    calEnd: '2026-11-17T15:00:00',
+    highlightDays: [17]
   },
   bride: {
     side: 'bride',
