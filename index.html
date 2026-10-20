@@ -24,20 +24,218 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Arima:wght@400;600;700&family=Cinzel:wght@400;500;600&family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Lora:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&family=Philosopher:wght@400;700&family=Prata&family=Quicksand:wght@400;500;600;700&family=The+Nautigal:wght@700&family=Tinos:ital,wght@0,400;0,700;1,400&family=Yeseva+One&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Arima:wght@400;600;700&family=Be+Vietnam+Pro:wght@400;500;600;700&family=Charm:wght@400;700&family=Cinzel:wght@400;500;600&family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Lora:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&family=Philosopher:wght@400;700&family=Prata&family=Quicksand:wght@400;500;600;700&family=The+Nautigal:wght@700&family=Tinos:ital,wght@0,400;0,700;1,400&family=Yeseva+One&display=swap"
     rel="stylesheet">
 
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="./css/style.css?v=sharp_v3">
+  <!-- TanaWedding Style RSVP Landing Stylesheet -->
+  <link rel="stylesheet" href="./css/rsvp-landing.css?v=tana_1">
 </head>
 
-<body class="quiet-vip-body nova-cover-active">
+<body class="quiet-vip-body">
+
+  <!-- ================= TANAWEDDING STYLE RSVP FRONT PAGE (NHÀ GÁI) ================= -->
+  <div id="tana-rsvp-screen">
+    <main class="rsvp-standalone-page">
+      <!-- Header -->
+      <header class="rsvp-page-header">
+        <a class="rsvp-nav-brand" href="#thiep-moi" onclick="openWeddingInvitation(event)">
+          Thuỳ Linh &amp; Phú Cường
+        </a>
+        <a class="rsvp-back-link" href="#thiep-moi" onclick="openWeddingInvitation(event)">
+          Xem thiệp mời
+        </a>
+      </header>
+
+      <!-- Two-column Layout -->
+      <div class="rsvp-page-layout">
+        <!-- Left Column: Hero Invitation Card -->
+        <section class="rsvp-hero-card">
+          <span class="rsvp-super-title">NGÀY VUI CỦA CHÚNG MÌNH</span>
+          <h1 class="rsvp-main-heading">
+            <span class="hero-name-line">Thuỳ Linh</span>
+            <span class="amp">&amp;</span>
+            <span class="hero-name-line">Phú Cường</span>
+          </h1>
+
+          <div id="rsvp-custom-guest-tag" class="rsvp-guest-tag" style="display:none;">
+            <span class="tag-prefix">Kính gửi:</span>
+            <strong class="tag-name" id="rsvp-display-guest-name">Quý khách</strong>
+          </div>
+
+          <p class="rsvp-card-sub" id="rsvp-card-sub-text">
+            Trân trọng kính mời bạn xác nhận thông tin tham dự tiệc cưới cùng chúng tôi.
+          </p>
+
+          <div class="rsvp-meta-info">
+            <span class="meta-highlight">11:00 — 17.11.2026</span>
+            <span class="meta-sep">|</span>
+            <span>Queen Bee Luxury Palace</span>
+            <span class="meta-sep">|</span>
+            <span>Tầng 2, 20 Láng Hạ, Đống Đa, Hà Nội</span>
+          </div>
+
+          <p class="rsvp-side-tag">Khách mời Nhà Gái</p>
+        </section>
+
+        <!-- Right Column: RSVP Stationery Card -->
+        <div class="rsvp-card-container">
+          <div id="tana-form-inner" class="rsvp-stationery-form">
+            <div class="rsvp-form-header">
+              <span class="rsvp-form-kicker">MỘT LỜI HẸN CHO NGÀY VUI</span>
+              <h2 class="rsvp-form-title">Hẹn gặp bạn nhé!</h2>
+              <p class="rsvp-notice-text">
+                Bạn dành chút thời gian để chúng tôi chuẩn bị đón tiếp thật chu đáo nhé.
+              </p>
+            </div>
+
+            <!-- 1. Họ và tên -->
+            <div class="rsvp-field">
+              <label for="rsvp-tana-name" class="rsvp-label">
+                1. Tên anh/chị/bạn là gì? <span class="req">*</span>
+              </label>
+              <input id="rsvp-tana-name" type="text" class="rsvp-input-text" placeholder="Nhập họ và tên..." autocomplete="name" maxlength="120" required>
+              <span id="tana-name-error" class="field-error" style="display:none;">Vui lòng nhập tên của bạn.</span>
+            </div>
+
+            <!-- 2. Xác nhận tham dự -->
+            <fieldset class="rsvp-field">
+              <legend class="rsvp-label">
+                2. Bạn có tham dự tiệc cưới của chúng tôi không? <span class="req">*</span>
+              </legend>
+              <div class="rsvp-options-vertical">
+                <label class="rsvp-radio-card checked" onclick="selectTanaAttendance(this, 'attending')">
+                  <input type="radio" name="tana-attendance" value="attending" checked>
+                  <div class="radio-text-col">
+                    <span class="option-title">Có, mình sẽ tham dự</span>
+                    <span class="option-sub">Hẹn gặp bạn trong ngày vui</span>
+                  </div>
+                </label>
+                <label class="rsvp-radio-card" onclick="selectTanaAttendance(this, 'considering')">
+                  <input type="radio" name="tana-attendance" value="considering">
+                  <div class="radio-text-col">
+                    <span class="option-title">Đang cân nhắc sắp xếp</span>
+                    <span class="option-sub">Bạn có thể cập nhật khi chốt được lịch</span>
+                  </div>
+                </label>
+                <label class="rsvp-radio-card" onclick="selectTanaAttendance(this, 'declined')">
+                  <input type="radio" name="tana-attendance" value="declined">
+                  <div class="radio-text-col">
+                    <span class="option-title">Tiếc quá, mình không tham gia được</span>
+                    <span class="option-sub">Gửi lời chúc phúc từ xa</span>
+                  </div>
+                </label>
+              </div>
+              <span id="tana-attendance-error" class="field-error" style="display:none;">Vui lòng chọn một phương án tham dự.</span>
+            </fieldset>
+
+            <!-- 3. Số lượng người -->
+            <fieldset id="tana-guest-count-section" class="rsvp-field">
+              <legend class="rsvp-label">
+                3. Bạn sẽ tham dự cùng bao nhiêu người (tính cả bạn nhé)? <span class="req">*</span>
+              </legend>
+              <div class="rsvp-options-grid-three">
+                <label class="rsvp-radio-card count-style checked" onclick="selectTanaCount(this, '1')">
+                  <input type="radio" name="tana-count" value="1" checked>
+                  <span class="count-number">1 người</span>
+                  <span class="count-desc">Đi một mình</span>
+                </label>
+                <label class="rsvp-radio-card count-style" onclick="selectTanaCount(this, '2')">
+                  <input type="radio" name="tana-count" value="2">
+                  <span class="count-number">2 người</span>
+                  <span class="count-desc">Đi cùng người thân</span>
+                </label>
+                <label class="rsvp-radio-card count-style" onclick="selectTanaCount(this, 'other')">
+                  <input type="radio" name="tana-count" value="other">
+                  <span class="count-number">Số khác</span>
+                  <span class="count-desc">Đi theo nhóm</span>
+                </label>
+              </div>
+              <div id="tana-guest-other-wrap" class="other-input-block" style="display:none;">
+                <label for="tana-guest-other-input" class="sub-label">Nhập tổng số người tham dự:</label>
+                <input id="tana-guest-other-input" type="number" min="1" step="1" class="rsvp-input-text" placeholder="Ví dụ: 3">
+              </div>
+              <span id="tana-count-error" class="field-error" style="display:none;">Vui lòng nhập số người từ 1 trở lên.</span>
+            </fieldset>
+
+            <!-- 4. Mối quan hệ -->
+            <fieldset class="rsvp-field">
+              <legend class="rsvp-label">
+                4. Bạn biết cô dâu/chú rể từ đâu? <span class="req">*</span>
+              </legend>
+              <div class="rsvp-options-grid-two">
+                <label class="rsvp-radio-card checked" onclick="selectTanaRelation(this, 'family')">
+                  <input type="radio" name="tana-relation" value="family" checked>
+                  <span class="option-title">Gia đình / Người thân</span>
+                </label>
+                <label class="rsvp-radio-card" onclick="selectTanaRelation(this, 'friend')">
+                  <input type="radio" name="tana-relation" value="friend">
+                  <span class="option-title">Bạn bè</span>
+                </label>
+                <label class="rsvp-radio-card" onclick="selectTanaRelation(this, 'coworker')">
+                  <input type="radio" name="tana-relation" value="coworker">
+                  <span class="option-title">Đồng nghiệp</span>
+                </label>
+                <label class="rsvp-radio-card" onclick="selectTanaRelation(this, 'other')">
+                  <input type="radio" name="tana-relation" value="other">
+                  <span class="option-title">Mối quan hệ khác</span>
+                </label>
+              </div>
+              <div id="tana-relation-other-wrap" class="other-input-block" style="display:none;">
+                <input id="tana-relation-other-input" type="text" class="rsvp-input-text" placeholder="Vui lòng cho chúng tôi biết thêm..." maxlength="120">
+              </div>
+              <span id="tana-relation-error" class="field-error" style="display:none;">Vui lòng chọn một phương án.</span>
+            </fieldset>
+
+            <!-- 5. Lời chúc -->
+            <div class="rsvp-field">
+              <label for="tana-wish-text" class="rsvp-label">
+                5. Lời chúc phúc gửi đến Cô dâu &amp; Chú rể:
+              </label>
+              <textarea id="tana-wish-text" class="rsvp-input-text" rows="3" placeholder="Gửi gắm những lời yêu thương và chúc phúc đến Thuỳ Linh &amp; Phú Cường..."></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <button id="tana-submit-btn" class="rsvp-submit-btn" type="button" onclick="submitTanaRsvp()">
+              GỬI PHÚC ĐÁP
+            </button>
+            <p class="rsvp-privacy-note">
+              Thông tin phản hồi được dùng để gia đình chuẩn bị đón tiếp chu đáo nhất.
+            </p>
+          </div>
+
+          <!-- Success View -->
+          <div id="tana-success-view" class="rsvp-stationery-success" style="display:none;" role="status">
+            <span class="rsvp-watermark">CẢM ƠN BẠN</span>
+            <strong class="success-heading">Cảm ơn bạn! Phúc đáp đã được lưu thành công.</strong>
+            <p class="success-paragraph" id="tana-success-msg">
+              Hẹn gặp bạn tại buổi tiệc vào 11:00 ngày 17.11.2026. Sự hiện diện của bạn là niềm hạnh phúc lớn của hai gia đình!
+            </p>
+            <span class="signature-couple">Thuỳ Linh &amp; Phú Cường</span>
+            <div style="margin-top: 20px;">
+              <button type="button" class="rsvp-back-bottom-btn" style="background:#fff; border-color:#bb7895; color:#854762; font-size:14px; padding: 12px 28px;" onclick="openWeddingInvitation(event)">
+                XEM THIỆP MỜI NGAY ✨
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Action -->
+      <div class="rsvp-footer-action">
+        <button type="button" class="rsvp-back-bottom-btn" onclick="openWeddingInvitation(event)">
+          QUAY LẠI THIỆP MỜI NHÀ GÁI
+        </button>
+      </div>
+    </main>
+  </div>
 
   <!-- Fullscreen Soft White Scene Transition Glow Overlay -->
   <div id="nova-white-flash" class="nova-white-flash" aria-hidden="true"></div>
 
   <!-- ================= NOVA PREMIUM OPENING COVER INVITATION ================= -->
-  <div id="nova-cover" class="nova-cover-overlay">
+  <div id="nova-cover" class="nova-cover-overlay" style="display: none !important;">
     <!-- Photo Background with Drift Animation -->
     <div class="nova-cover-photo-wrap">
       <picture>
@@ -1331,6 +1529,8 @@
 
   <!-- App Client Scripts -->
   <script src="./js/app.js?v=music_random_v1"></script>
+  <!-- TanaWedding Style RSVP Landing Script -->
+  <script src="./js/rsvp-landing.js?v=tana_1"></script>
 </body>
 
 </html>
