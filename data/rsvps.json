@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1792484416914,
+    "name": "gdfg",
+    "email": "",
+    "attendance": "Có, tôi sẽ tham dự",
+    "guestOf": "Khách mời Cô Dâu (Thuỳ Linh)",
+    "guestCount": "1",
+    "eventTarget": "Tất cả Sự kiện nhà Trai",
+    "submittedAt": "2026-10-20T08:20:16.914Z"
+  },
+  {
+    "id": 1792445229527,
+    "name": "Luc Quyen",
+    "email": "",
+    "attendance": "Có, tôi sẽ tham dự",
+    "guestOf": "Khách mời của cả hai",
+    "guestCount": "1",
+    "eventTarget": "Tất cả Sự kiện nhà Trai",
+    "submittedAt": "2026-10-19T21:27:09.527Z"
+  },
+  {
+    "id": 1792307310393,
+    "name": "Kiểm tra giao diện VIP",
+    "email": "test@example.com",
+    "attendance": "Có, tôi sẽ tham dự",
+    "guestOf": "Chú Rể & Cô Dâu",
+    "guestCount": "2",
+    "eventTarget": "Tiệc Cưới nhà Trai",
+    "submittedAt": "2026-10-18T07:08:30.393Z"
+  },
+  {
+    "id": 1791739487591,
+    "name": "Bác Nguyễn Văn Hùng",
+    "email": "",
+    "attendance": "Có, tôi sẽ tham dự",
+    "guestOf": "Chú Rể",
+    "guestCount": "2",
+    "eventTarget": "Tiệc Cưới Nhà Trai (13/11)",
+    "submittedAt": "2026-10-11T17:24:47.591Z"
+  },
+  {
+    "id": 1791738548626,
+    "name": "Khách Thử Nghiệm",
+    "email": "",
+    "attendance": "Có, tôi sẽ tham dự",
+    "guestOf": "Chú Rể & Cô Dâu",
+    "guestCount": "1",
+    "eventTarget": "Tiệc Cưới Nhà Trai",
+    "submittedAt": "2026-10-11T17:09:08.626Z"
+  }
+]

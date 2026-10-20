@@ -1,0 +1,21 @@
+{
+  "name": "thiepcuoi-phucuong",
+  "version": "1.0.0",
+  "description": "Thiệp mới cưới Phú Cường - Thùy Linh",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "wedding",
+    "invitation",
+    "thiep-cuoi",
+    "quiet-vip"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer-core": "^25.14.0",
+    "sharp": "^0.35.5"
+  }
+}
