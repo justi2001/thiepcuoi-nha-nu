@@ -205,7 +205,7 @@ const server = http.createServer(async (req, res) => {
   // STATIC FILES
   // ==========================================
   let localPath = reqPath;
-  if (localPath === '/') localPath = '/index.html';
+  if (localPath === '/' || !path.extname(localPath)) localPath = '/index.html';
 
   let filePath = path.join(__dirname, 'public', localPath);
   if (!fs.existsSync(filePath)) {
