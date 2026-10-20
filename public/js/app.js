@@ -504,7 +504,7 @@ const SCHEDULE_CONFIG = {
     venueText: 'Tại : TT Tiệc Cưới Queen Bee',
     addressText: 'Số 20 Láng Hạ, quận Đống Đa, Hà Nội',
     mapUrl: 'https://maps.google.com/?q=Queen+Bee+20+Láng+Hạ+Đống+Đa+Hà+Nội',
-    calTitle: 'Lễ Cưới Vũ Thuỳ Linh & Phú Cường (Nhà Gái)',
+    calTitle: 'Lễ Cưới Phú Cường & Vũ Thuỳ Linh (Nhà Gái)',
     calStart: '2026-11-17T11:00:00',
     calEnd: '2026-11-17T15:00:00',
     highlightDays: [17]
@@ -518,7 +518,7 @@ const SCHEDULE_CONFIG = {
     venueText: 'Tại : TT Tiệc Cưới Queen Bee',
     addressText: 'Số 20 Láng Hạ, quận Đống Đa, Hà Nội',
     mapUrl: 'https://maps.google.com/?q=Queen+Bee+20+Láng+Hạ+Đống+Đa+Hà+Nội',
-    calTitle: 'Lễ Cưới Vũ Thuỳ Linh & Phú Cường (Nhà Gái)',
+    calTitle: 'Lễ Cưới Phú Cường & Vũ Thuỳ Linh (Nhà Gái)',
     calStart: '2026-11-17T11:00:00',
     calEnd: '2026-11-17T15:00:00',
     highlightDays: [17]
