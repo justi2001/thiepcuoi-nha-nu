@@ -40,6 +40,12 @@ function initTanaGuestFromUrl() {
         subText.textContent = `Trân trọng kính mời ${cleanName} xác nhận thông tin tham dự tiệc cưới cùng chúng tôi.`;
       }
     }
+
+    // Also sync to nova-cover opening card
+    const novaGuest = document.getElementById('nova-guest-name');
+    if (novaGuest && cleanName) {
+      novaGuest.textContent = cleanName;
+    }
   } catch (err) {
     console.warn('Error parsing guest url:', err);
   }
@@ -302,7 +308,7 @@ window.submitTanaRsvp = async function() {
   }, 400);
 };
 
-// Transition from RSVP front page to main invitation page
+// Transition from RSVP front page to opening cover invitation (giao diện MỞ THIỆP)
 window.openWeddingInvitation = function(e) {
   if (e && e.preventDefault) e.preventDefault();
 
@@ -311,29 +317,18 @@ window.openWeddingInvitation = function(e) {
     rsvpScreen.classList.add('is-hidden');
   }
 
-  // Remove cover lock on body
-  document.body.classList.remove('nova-cover-active');
-
-  // If nova-cover was active, hide it as well
+  // Reveal the opening cover screen (#nova-cover) as requested by user
   const novaCover = document.getElementById('nova-cover');
   if (novaCover) {
-    novaCover.style.display = 'none';
+    novaCover.style.display = 'flex';
+    novaCover.classList.remove('nova-opening');
   }
 
-  // Auto start background music gracefully
-  try {
-    if (typeof playAudio === 'function') {
-      playAudio();
-    } else {
-      const audio = document.getElementById('bg-audio');
-      if (audio && audio.paused) {
-        audio.play().catch(() => {});
-      }
-    }
-  } catch (err) {}
+  // Lock body scroll while on opening cover
+  document.body.classList.add('nova-cover-active');
 
-  // Scroll to top of wedding invitation smoothly
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Scroll to top smoothly
+  window.scrollTo({ top: 0, behavior: 'instant' });
 };
 
 // Return to RSVP front page from main invitation if needed

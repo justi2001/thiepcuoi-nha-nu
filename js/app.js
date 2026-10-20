@@ -510,8 +510,8 @@ function switchCard(type) {
 // ==========================================
 // 6. VIP SCHEDULE SWITCHER & COUNTDOWN TIMER
 // ==========================================
-let currentScheduleSide = 'groom'; // 'groom' | 'bride'
-let scheduleCountdownTarget = new Date('2026-11-13T15:30:00+07:00').getTime();
+let currentScheduleSide = 'bride'; // Default to Nhà Gái
+let scheduleCountdownTarget = new Date('2026-11-17T11:00:00+07:00').getTime();
 
 const SCHEDULE_CONFIG = {
   groom: {
@@ -549,9 +549,13 @@ function switchSchedule(side) {
   const cfg = SCHEDULE_CONFIG[side];
   if (!cfg) return;
 
-  // 1. Button active states
+  // 1. Button active states & title badge
   const btnGroom = document.getElementById('btn-sched-groom');
   const btnBride = document.getElementById('btn-sched-bride');
+  const badgeText = document.getElementById('sched-title-text');
+  if (badgeText) {
+    badgeText.textContent = side === 'bride' ? 'LỊCH CƯỚI NHÀ CÔ DÂU' : 'LỊCH CƯỚI NHÀ CHÚ RỂ';
+  }
   if (side === 'groom') {
     if (btnGroom) btnGroom.classList.add('active');
     if (btnBride) btnBride.classList.remove('active');
@@ -1690,6 +1694,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initFallingHearts();
   initScrollReveal();
   initCountdown();
+  switchSchedule('bride');
+  switchCard('nhagai');
   initAlbumPriorityPreloader();
   initAlbumScrollChoreography();
   loadWishes();
