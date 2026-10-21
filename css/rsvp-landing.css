@@ -3,6 +3,18 @@
    Matches https://wedding.tanawedding.workers.dev/nha-gai/phuc-dap
    ===================================================================== */
 
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=The+Nautigal:wght@700&display=swap');
+
+@font-face {
+  font-family: 'UTM ViceroyJF';
+  src: url('../fonts/UTMViceroyJF.ttf') format('truetype'),
+    url('/fonts/UTMViceroyJF.ttf') format('truetype'),
+    url('https://s3-hcm-r2.s3cloud.vn/thiepcuoi-mehappy/users/1927/8e2504ae-249d-494c-b808-b5924eca3fd4.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --tana-bg: #fff7fa;
   --tana-bg-soft: #fdf0f5;
@@ -16,6 +28,7 @@
   --tana-border: #eadce2;
   --tana-border-soft: #f2e3e9;
   --tana-btn-grad: linear-gradient(135deg, #b9688b 0%, #934866 100%);
+  --font-hero-calligraphy: 'The Nautigal', 'Great Vibes', 'UTM ViceroyJF', cursive;
 }
 
 /* Fullscreen Overlay / First Page Container */
@@ -68,14 +81,15 @@
 }
 
 .rsvp-nav-brand {
-  font-family: 'Charm', cursive;
-  font-size: 26px;
+  font-family: var(--font-hero-calligraphy, 'The Nautigal', 'Great Vibes', 'UTM ViceroyJF', cursive);
+  font-size: 34px;
   font-weight: 700;
   color: var(--tana-ink-primary);
   text-decoration: none;
   letter-spacing: 0;
   transition: opacity 0.2s ease;
   display: inline-block;
+  line-height: 1.1;
 }
 
 .rsvp-nav-brand:hover {
@@ -142,13 +156,14 @@
 }
 
 .rsvp-main-heading {
-  font-family: 'Charm', cursive;
+  font-family: var(--font-hero-calligraphy, 'The Nautigal', 'Great Vibes', 'UTM ViceroyJF', cursive);
   font-style: normal;
-  font-size: clamp(44px, 4.8vw, 62px);
-  line-height: 1.25;
-  margin: 0 0 24px;
+  font-size: clamp(58px, 6.8vw, 84px);
+  line-height: 1.15;
+  margin: 0 0 20px;
   color: var(--tana-ink-primary);
   font-weight: 700;
+  text-shadow: 0 2px 12px rgba(133, 71, 98, 0.12);
 }
 
 .rsvp-main-heading .hero-name-line {
@@ -157,10 +172,11 @@
 
 .rsvp-main-heading .amp {
   display: block;
-  font-size: 30px;
+  font-size: 40px;
   color: var(--tana-accent-rose);
-  margin: 6px 0;
-  font-family: 'Charm', cursive;
+  margin: 4px 0;
+  font-family: var(--font-hero-calligraphy, 'The Nautigal', 'Great Vibes', 'UTM ViceroyJF', cursive);
+  line-height: 1;
 }
 
 .rsvp-guest-tag {
@@ -261,10 +277,10 @@
 }
 
 .rsvp-form-title {
-  font-family: 'Charm', cursive;
-  font-size: clamp(32px, 3.8vw, 38px);
+  font-family: var(--font-hero-calligraphy, 'The Nautigal', 'Great Vibes', 'UTM ViceroyJF', cursive);
+  font-size: clamp(36px, 4.2vw, 46px);
   font-weight: 700;
-  line-height: 1.35;
+  line-height: 1.25;
   color: var(--tana-ink-primary);
   margin: 8px 0;
 }
@@ -533,8 +549,8 @@ textarea.rsvp-input-text {
 }
 
 .rsvp-stationery-success .rsvp-watermark {
-  font-family: 'Charm', cursive;
-  font-size: clamp(34px, 4vw, 42px);
+  font-family: var(--font-hero-calligraphy, 'The Nautigal', 'Great Vibes', 'UTM ViceroyJF', cursive);
+  font-size: clamp(40px, 4.8vw, 52px);
   letter-spacing: 0;
   color: var(--tana-accent-rose);
   margin-bottom: 16px;
@@ -558,8 +574,8 @@ textarea.rsvp-input-text {
 }
 
 .rsvp-stationery-success .signature-couple {
-  font-family: 'Charm', cursive;
-  font-size: 26px;
+  font-family: var(--font-hero-calligraphy, 'The Nautigal', 'Great Vibes', 'UTM ViceroyJF', cursive);
+  font-size: 34px;
   font-weight: 700;
   color: var(--tana-ink-primary);
   margin-bottom: 24px;
@@ -609,7 +625,7 @@ textarea.rsvp-input-text {
   }
 
   .rsvp-nav-brand {
-    font-size: 22px;
+    font-size: 28px;
   }
 
   .rsvp-back-link {
@@ -629,7 +645,7 @@ textarea.rsvp-input-text {
   }
 
   .rsvp-main-heading {
-    font-size: 40px;
+    font-size: 46px;
     margin: 12px 0 16px;
   }
 
