@@ -509,8 +509,8 @@ const SCHEDULE_CONFIG = {
     selectedTimeText: '11:00 Thứ 3 ngày 17 thg 11, 2026',
     dayText: 'Thứ Ba',
     dateText: '17 . 11 . 2026',
-    venueText: 'Tại : TT Tiệc Cưới Queen Bee',
-    addressText: 'Tầng 2, Số 20 Láng Hạ - Phường Láng - Hà Nội',
+    venueText: 'Tại : Tầng 2 - Trung tâm tiệc cưới Queen bee',
+    addressText: '20 Láng Hạ, phường Láng, Hà Nội',
     mapUrl: 'https://maps.google.com/?q=Queen+Bee+Tang+2+20+Lang+Ha+Phuong+Lang+Ha+Noi',
     calTitle: 'Lễ Cưới Thuỳ Linh & Phú Cường (Nhà Gái)',
     calStart: '2026-11-17T11:00:00',
@@ -523,8 +523,8 @@ const SCHEDULE_CONFIG = {
     selectedTimeText: '11:00 Thứ 3 ngày 17 thg 11, 2026',
     dayText: 'Thứ Ba',
     dateText: '17 . 11 . 2026',
-    venueText: 'Tại : TT Tiệc Cưới Queen Bee',
-    addressText: 'Tầng 2, Số 20 Láng Hạ - Phường Láng - Hà Nội',
+    venueText: 'Tại : Tầng 2 - Trung tâm tiệc cưới Queen bee',
+    addressText: '20 Láng Hạ, phường Láng, Hà Nội',
     mapUrl: 'https://maps.google.com/?q=Queen+Bee+Tang+2+20+Lang+Ha+Phuong+Lang+Ha+Noi',
     calTitle: 'Lễ Cưới Thuỳ Linh & Phú Cường (Nhà Gái)',
     calStart: '2026-11-17T11:00:00',
@@ -568,8 +568,8 @@ function switchSchedule(side) {
 
   if (dayLbl) dayLbl.textContent = 'Thứ Ba';
   if (dateLbl) dateLbl.textContent = '17 . 11 . 2026';
-  if (venueLbl) venueLbl.textContent = 'Tại : Trung Tâm Tiệc Cưới Queen Bee';
-  if (addrLbl) addrLbl.textContent = 'Tầng 2, Số 20 Láng Hạ - Phường Láng - Hà Nội';
+  if (venueLbl) venueLbl.textContent = 'Tại : Tầng 2 - Trung tâm tiệc cưới Queen bee';
+  if (addrLbl) addrLbl.textContent = '20 Láng Hạ, phường Láng, Hà Nội';
   if (mapBtn) mapBtn.href = 'https://maps.google.com/?q=Queen+Bee+Tang+2+20+Lang+Ha+Phuong+Lang+Ha+Noi';
 
   // 5. Mục tiêu đếm ngược: 11:00 ngày 17/11/2026
