@@ -342,22 +342,23 @@ window.submitTanaRsvp = async function() {
     }).catch(err => console.warn('Local API RSVP save warning:', err));
   } catch (e) {}
 
-  // 2. Send to Google Sheets if configured
+  // 2. Gửi lên Google Sheets bằng POST JSON đúng định dạng
   if (typeof GOOGLE_SCRIPT_URL !== 'undefined' && GOOGLE_SCRIPT_URL) {
     try {
-      const sheetParams = {
-        sheetName: 'RSVP',
-        action: 'rsvp',
+      const sheetPayload = {
         name: nameVal,
-        guestOf: 'Cô Dâu (Thuỳ Linh)',
         attendance: attendanceLabels[attVal] || attVal,
-        count: finalCount,
-        eventTarget: 'Lễ Cưới Nhà Gái (17/11/2026)',
-        note: `[Quan hệ: ${relationLabels[relVal] || relVal}] ${wishVal}`.trim()
+        guests: String(finalCount),
+        relation: relationLabels[relVal] || relVal,
+        wishes: wishVal,
+        email: ''
       };
-      const qs = new URLSearchParams(sheetParams).toString();
-      const scriptUrl = GOOGLE_SCRIPT_URL.includes('?') ? `${GOOGLE_SCRIPT_URL}&${qs}` : `${GOOGLE_SCRIPT_URL}?${qs}`;
-      fetch(scriptUrl, { method: 'GET', mode: 'no-cors' }).catch(err => console.warn('Google Sheets RSVP warning:', err));
+      fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(sheetPayload)
+      }).catch(err => console.warn('Google Sheets RSVP warning:', err));
     } catch (e) {}
   }
 
