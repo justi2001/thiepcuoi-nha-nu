@@ -8,7 +8,7 @@
 // ==========================================
 // 1. DATASET & CONFIGURATION
 // ==========================================
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx9DSHqd9H3Ozx5kIiWqyj-xvPxe477ZU67Ssh62DcCXxI6yQQRpBrfhKOHQ1KsQ_A/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzjWAfF_v7EBGjnpssex2E87ubuSHJ8RA64GjfUOd4EvS6Jg5Q0K_hRvAx-ACE6zbd3oA/exec';
 
 const ALBUM_IMAGES = [
   "images/wedding/PQD06286.jpg",
@@ -696,13 +696,20 @@ async function handleRsvpSubmit(e) {
     }
 
     if (GOOGLE_SCRIPT_URL) {
-      const qs = new URLSearchParams(payload).toString();
-      const scriptUrl = GOOGLE_SCRIPT_URL.includes('?') ? `${GOOGLE_SCRIPT_URL}&${qs}` : `${GOOGLE_SCRIPT_URL}?${qs}`;
-      await fetch(scriptUrl, {
+      // Gửi POST JSON đúng định dạng mà Google Apps Script yêu cầu
+      const sheetPayload = {
+        name: payload.name || payload.fullName || '',
+        attendance: payload.attendance || 'Tham dự',
+        guests: payload.guestCount || '1',
+        relation: payload.relationship || payload.relation || 'Khách mời',
+        wishes: payload.note || payload.message || '',
+        email: payload.email || ''
+      };
+      await fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(sheetPayload)
       }).catch(err => console.warn('Google Script sync warning:', err));
     }
 
@@ -802,13 +809,20 @@ async function handleWishSubmit(e) {
     }
 
     if (GOOGLE_SCRIPT_URL) {
-      const qs = new URLSearchParams(payload).toString();
-      const scriptUrl = GOOGLE_SCRIPT_URL.includes('?') ? `${GOOGLE_SCRIPT_URL}&${qs}` : `${GOOGLE_SCRIPT_URL}?${qs}`;
-      await fetch(scriptUrl, {
+      // Gửi lời chúc vào Google Sheets (wishes field)
+      const sheetPayload = {
+        name: payload.name || author,
+        attendance: 'Lời chúc',
+        guests: '0',
+        relation: 'Khách mời',
+        wishes: payload.message || message,
+        email: ''
+      };
+      await fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(sheetPayload)
       }).catch(err => console.warn('Google Script sync warning:', err));
     }
 
