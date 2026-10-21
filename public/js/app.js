@@ -1495,10 +1495,11 @@ function initScrollReveal() {
   if (globalScrollObserver) globalScrollObserver.disconnect();
   if (photoScrollObserver) photoScrollObserver.disconnect();
 
-  // Trên Mobile & Desktop: Dùng bottomMargin âm (-35px / -45px) để phần tử PHẢI TIẾN VÀO TRONG MÀN HÌNH
-  // Người dùng lướt tới đâu thì hiệu ứng mới kích hoạt chạy ngay trước mắt, không chạy trước khi chưa tới!
+  // Trên Mobile: Dùng bottomMargin âm lớn (-120px) để phần tử PHẢI VÀO TRONG MÀN HÌNH RÕ RÀNG
+  // mới kích hoạt hiệu ứng, tránh chạy trước khi người dùng lướt tới!
   const isMobile = window.innerWidth <= 768;
-  const bottomMargin = isMobile ? '-35px' : '-45px';
+  const bottomMargin = isMobile ? '-120px' : '-50px';
+  const intersectThreshold = isMobile ? 0.15 : 0.08;
 
   globalScrollObserver = new IntersectionObserver((entries) => {
     if (!isMasterContentVisible()) return;
@@ -1510,7 +1511,7 @@ function initScrollReveal() {
       if (entry.isIntersecting) {
         el.classList.add('qv-visible');
       } else {
-        // Khi cuộn ngược lên trên, phần tử trôi ra khỏi màn hình phía dưới thì reset lại để lần sau cuộn xuống chạy lại
+        // Khi cuộn ngược lên trên, phần tử trôi ra khỏi màn hình phía dưới thì reset lại
         const rect = el.getBoundingClientRect();
         if (rect.top > window.innerHeight) {
           el.classList.remove('qv-visible');
@@ -1518,7 +1519,7 @@ function initScrollReveal() {
       }
     });
   }, {
-    threshold: [0, 0.08],
+    threshold: intersectThreshold,
     rootMargin: `0px 0px ${bottomMargin} 0px`
   });
 
@@ -1539,7 +1540,7 @@ function initScrollReveal() {
       }
     });
   }, {
-    threshold: [0, 0.06],
+    threshold: isMobile ? 0.12 : 0.06,
     rootMargin: `0px 0px ${bottomMargin} 0px`
   });
 
@@ -1549,7 +1550,8 @@ function initScrollReveal() {
 
     // Đảm bảo ban đầu chưa có qv-visible nếu chưa lướt tới
     const rect = el.getBoundingClientRect();
-    if (!isMasterContentVisible() || rect.top > window.innerHeight - 35) {
+    const visibleThreshold = isMobile ? window.innerHeight - 120 : window.innerHeight - 50;
+    if (!isMasterContentVisible() || rect.top > visibleThreshold) {
       el.classList.remove('qv-visible');
     }
 
@@ -1564,7 +1566,7 @@ function initScrollReveal() {
 window.refreshScrollReveal = function() {
   const elements = document.querySelectorAll('[class*="qv-anim-"], .qv-reveal, .qv-text-reveal');
   const isMobile = window.innerWidth <= 768;
-  const bottomThreshold = isMobile ? window.innerHeight - 35 : window.innerHeight - 45;
+  const bottomThreshold = isMobile ? window.innerHeight - 120 : window.innerHeight - 50;
 
   elements.forEach(el => {
     if (el.closest('#section-hero') || el.closest('.album-rows-wrap')) return;
