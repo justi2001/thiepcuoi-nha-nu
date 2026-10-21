@@ -47,7 +47,7 @@ const GUEST_NOTIFICATIONS = [
   { name: 'Cao Thái Sơn', text: 'Chúc hai bạn vui vẻ, trăm năm hạnh phúc!' },
   { name: 'Bác Nguyễn Văn Hùng', text: 'vừa xác nhận tham dự tiệc cưới Nhà Gái' },
   { name: 'Cô Nghiêm Kim Oanh', text: 'Chúc hai cháu trăm năm tình viên mãn!' },
-  { name: 'Anh Minh Tuấn', text: 'Chúc mừng hạnh phúc hai em Phú Cường & Thuỳ Linh!' },
+  { name: 'Anh Minh Tuấn', text: 'Chúc mừng hạnh phúc hai em Thuỳ Linh & Phú Cường!' },
   { name: 'Bạn Phương Linh', text: 'Chúc hai bạn mãi mãi ngọt ngào, hạnh phúc!' }
 ];
 
@@ -504,7 +504,7 @@ const SCHEDULE_CONFIG = {
     venueText: 'Tại : TT Tiệc Cưới Queen Bee',
     addressText: 'Tầng 2, Số 20 Láng Hạ - Phường Láng - Hà Nội',
     mapUrl: 'https://maps.google.com/?q=Queen+Bee+Tang+2+20+Lang+Ha+Phuong+Lang+Ha+Noi',
-    calTitle: 'Lễ Cưới Phú Cường & Vũ Thuỳ Linh (Nhà Gái)',
+    calTitle: 'Lễ Cưới Thuỳ Linh & Phú Cường (Nhà Gái)',
     calStart: '2026-11-17T11:00:00',
     calEnd: '2026-11-17T15:00:00',
     highlightDays: [17]
@@ -518,7 +518,7 @@ const SCHEDULE_CONFIG = {
     venueText: 'Tại : TT Tiệc Cưới Queen Bee',
     addressText: 'Tầng 2, Số 20 Láng Hạ - Phường Láng - Hà Nội',
     mapUrl: 'https://maps.google.com/?q=Queen+Bee+Tang+2+20+Lang+Ha+Phuong+Lang+Ha+Noi',
-    calTitle: 'Lễ Cưới Phú Cường & Vũ Thuỳ Linh (Nhà Gái)',
+    calTitle: 'Lễ Cưới Thuỳ Linh & Phú Cường (Nhà Gái)',
     calStart: '2026-11-17T11:00:00',
     calEnd: '2026-11-17T15:00:00',
     highlightDays: [17]
@@ -1451,7 +1451,7 @@ function addToGoogleCalendar(title, startISO, endISO, location) {
     '&text=' + encodeURIComponent(title) +
     '&dates=' + format(startISO) + '/' + format(endISO) +
     '&location=' + encodeURIComponent(location) +
-    '&details=' + encodeURIComponent('Đám cưới Phú Cường & Thuỳ Linh. Trân trọng kính mời bạn đến chung vui!');
+    '&details=' + encodeURIComponent('Đám cưới Thuỳ Linh & Phú Cường. Trân trọng kính mời bạn đến chung vui!');
   window.open(url, '_blank');
 }
 
