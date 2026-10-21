@@ -1,7 +1,7 @@
 {
-  "name": "thiepcuoi-phucuong",
+  "name": "thiepmoi-thuylinh-phucuong",
   "version": "1.0.0",
-  "description": "Thiệp mới cưới Phú Cường - Thùy Linh",
+  "description": "Thiệp cưới Thùy Linh - Phú Cường",
   "scripts": {
     "dev": "node server.js",
     "start": "node server.js"
