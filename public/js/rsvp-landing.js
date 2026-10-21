@@ -441,6 +441,9 @@ window.navigateToScreen = function(screenName, pushHistory = true) {
     // Lock body scroll while on opening cover
     document.body.classList.add('nova-cover-active');
     window.scrollTo({ top: 0, behavior: 'instant' });
+    if (typeof window.refreshScrollReveal === 'function') {
+      window.refreshScrollReveal();
+    }
   } else {
     // screenName === 'rsvp'
     if (pushHistory && window.location.hash !== '#phuc-dap' && window.location.hash !== '') {

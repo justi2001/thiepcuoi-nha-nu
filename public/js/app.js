@@ -242,8 +242,13 @@ function openNovaInvitation() {
       flash.classList.add('fade-out');
     }
 
-    // 5. Hiệu ứng chữ "Phú Cường & Thuỳ Linh" bắt đầu chạy vào lộng lẫy
+    // 5. Hiệu ứng chữ "Thuỳ Linh & Phú Cường" bắt đầu chạy vào lộng lẫy
     triggerHeroCoupleAnimation();
+
+    // 5.1 Khởi động lại scroll reveal để khi cuộn tới đâu hiệu ứng chạy tới đó
+    if (typeof window.refreshScrollReveal === 'function') {
+      window.refreshScrollReveal();
+    }
 
     // 6. Tự động cuộn trang êm ái luôn khi vào trang
     setTimeout(() => {
@@ -293,8 +298,11 @@ function triggerHeroCoupleAnimation() {
 }
 
 function initHeroCoverAnimation() {
-  // Nếu có bìa mở thiệp thì đợi bấm Mở thiệp mới kích hoạt chữ chạy
-  if (document.body.classList.contains('nova-cover-active')) {
+  // Nếu đang ở màn hình RSVP hoặc bìa mở thiệp thì đợi người dùng mở thiệp mới kích hoạt chữ chạy
+  const rsvpScreen = document.getElementById('tana-rsvp-screen');
+  const novaCover = document.getElementById('nova-cover');
+  if ((rsvpScreen && !rsvpScreen.classList.contains('is-hidden') && rsvpScreen.style.display !== 'none') ||
+      (novaCover && !novaCover.classList.contains('nova-opening') && novaCover.style.display !== 'none')) {
     return;
   }
   triggerHeroCoupleAnimation();
@@ -1468,6 +1476,18 @@ function isPhotoElement(el) {
          Boolean(el.closest('.card-photo-wrapper, .preface-fullscreen-photo, .portrait-photo, .wishes-photo-frame, .story-photo'));
 }
 
+function isMasterContentVisible() {
+  const rsvpScreen = document.getElementById('tana-rsvp-screen');
+  if (rsvpScreen && !rsvpScreen.classList.contains('is-hidden') && rsvpScreen.style.display !== 'none') {
+    return false;
+  }
+  const novaCover = document.getElementById('nova-cover');
+  if (novaCover && !novaCover.classList.contains('nova-opening') && novaCover.style.display !== 'none') {
+    return false;
+  }
+  return true;
+}
+
 function initScrollReveal() {
   const elements = document.querySelectorAll('[class*="qv-anim-"], .qv-reveal, .qv-text-reveal');
   if (!elements.length) return;
@@ -1475,40 +1495,63 @@ function initScrollReveal() {
   if (globalScrollObserver) globalScrollObserver.disconnect();
   if (photoScrollObserver) photoScrollObserver.disconnect();
 
-  // 1. Observer cho văn bản & tiêu đề: kích hoạt khi cuộn vừa chớm tới (~40px)
+  // Trên Mobile & Desktop: Dùng bottomMargin âm (-35px / -45px) để phần tử PHẢI TIẾN VÀO TRONG MÀN HÌNH
+  // Người dùng lướt tới đâu thì hiệu ứng mới kích hoạt chạy ngay trước mắt, không chạy trước khi chưa tới!
+  const isMobile = window.innerWidth <= 768;
+  const bottomMargin = isMobile ? '-35px' : '-45px';
+
   globalScrollObserver = new IntersectionObserver((entries) => {
+    if (!isMasterContentVisible()) return;
+
     entries.forEach(entry => {
       const el = entry.target;
       if (el.closest('#section-hero') || el.closest('.album-rows-wrap')) return;
 
       if (entry.isIntersecting) {
         el.classList.add('qv-visible');
+      } else {
+        // Khi cuộn ngược lên trên, phần tử trôi ra khỏi màn hình phía dưới thì reset lại để lần sau cuộn xuống chạy lại
+        const rect = el.getBoundingClientRect();
+        if (rect.top > window.innerHeight) {
+          el.classList.remove('qv-visible');
+        }
       }
     });
   }, {
-    threshold: 0.02,
-    rootMargin: '50px 0px 50px 0px'
+    threshold: [0, 0.08],
+    rootMargin: `0px 0px ${bottomMargin} 0px`
   });
 
-  // 2. Observer cho các phần có ảnh: Hiển thị ngay lập tức, không làm trễ hay mờ ảnh!
   photoScrollObserver = new IntersectionObserver((entries) => {
+    if (!isMasterContentVisible()) return;
+
     entries.forEach(entry => {
       const el = entry.target;
       if (el.closest('#section-hero') || el.closest('.album-rows-wrap')) return;
 
       if (entry.isIntersecting) {
         el.classList.add('qv-visible');
-        photoScrollObserver.unobserve(el);
+      } else {
+        const rect = el.getBoundingClientRect();
+        if (rect.top > window.innerHeight) {
+          el.classList.remove('qv-visible');
+        }
       }
     });
   }, {
-    threshold: 0.02,
-    rootMargin: '100px 0px 100px 0px' // Kích hoạt sớm để ảnh luôn rõ nét ngay khi cuộn tới!
+    threshold: [0, 0.06],
+    rootMargin: `0px 0px ${bottomMargin} 0px`
   });
 
   // Phân loại quan sát từng phần tử
   elements.forEach(el => {
     if (el.closest('#section-hero') || el.closest('.album-rows-wrap')) return;
+
+    // Đảm bảo ban đầu chưa có qv-visible nếu chưa lướt tới
+    const rect = el.getBoundingClientRect();
+    if (!isMasterContentVisible() || rect.top > window.innerHeight - 35) {
+      el.classList.remove('qv-visible');
+    }
 
     if (isPhotoElement(el)) {
       photoScrollObserver.observe(el);
@@ -1519,23 +1562,23 @@ function initScrollReveal() {
 }
 
 window.refreshScrollReveal = function() {
-  if (!globalScrollObserver || !photoScrollObserver) {
-    initScrollReveal();
-    return;
-  }
   const elements = document.querySelectorAll('[class*="qv-anim-"], .qv-reveal, .qv-text-reveal');
+  const isMobile = window.innerWidth <= 768;
+  const bottomThreshold = isMobile ? window.innerHeight - 35 : window.innerHeight - 45;
+
   elements.forEach(el => {
     if (el.closest('#section-hero') || el.closest('.album-rows-wrap')) return;
     const rect = el.getBoundingClientRect();
-    if (rect.top > window.innerHeight - 30) {
+    if (rect.top > bottomThreshold) {
       el.classList.remove('qv-visible');
-    }
-    if (isPhotoElement(el)) {
-      photoScrollObserver.observe(el);
-    } else {
-      globalScrollObserver.observe(el);
+    } else if (isMasterContentVisible() && rect.bottom > 0 && rect.top <= bottomThreshold) {
+      el.classList.add('qv-visible');
     }
   });
+
+  if (!globalScrollObserver || !photoScrollObserver) {
+    initScrollReveal();
+  }
 };
 
 // ==========================================

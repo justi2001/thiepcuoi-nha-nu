@@ -4518,6 +4518,11 @@ body:has(#qv-lightbox.open) .audio-toggle-btn {
    MOBILE RESPONSIVENESS (< 768PX)
    ========================================================================== */
 @media (max-width: 767px) {
+  :root {
+    --anim-duration: 1.1s;
+    --anim-duration-pop: 0.85s;
+  }
+
   .section-container {
     padding: 40px 16px;
   }
@@ -5247,10 +5252,10 @@ body:has(#qv-lightbox.open) .audio-toggle-btn {
    👉 Muốn hiệu ứng NHANH HƠN: GIẢM số giây xuống (VD: 0.6s, 0.7s, 0.8s)
    ========================================================================== */
 :root {
-  --anim-duration: 2.85s;
-  /* Thời gian trượt/zoom/lật xuất hiện cực kỳ chậm rãi & mượt mà (1.85s) */
-  --anim-duration-pop: 1.95s;
-  /* Thời gian hiệu ứng nảy nhẹ pop (1.95s) */
+  --anim-duration: 1.6s;
+  /* Thời gian trượt/zoom/lật xuất hiện êm ái & tự nhiên (1.6s) */
+  --anim-duration-pop: 1.1s;
+  /* Thời gian hiệu ứng nảy nhẹ pop (1.1s) */
 }
 
 [class*="qv-anim-"],
@@ -5410,7 +5415,7 @@ body:has(#qv-lightbox.open) .audio-toggle-btn {
 }
 
 .card-photo-wrapper.qv-visible::after {
-  animation: photoGoldenGlint 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) 2.1s forwards;
+  animation: photoGoldenGlint 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) 0.6s forwards;
 }
 
 @keyframes photoGoldenGlint {
