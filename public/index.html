@@ -648,43 +648,56 @@
                 <input type="hidden" id="rsvp-attendance" name="willCome" value="Có, tôi sẽ tham dự">
               </div>
 
-              <!-- Row 3: Số người tham dự & Quý khách là -->
-              <div class="form-row-2 qv-anim-fade-up qv-delay-4">
-                <div class="form-col input-with-icon" id="rsvp-count-wrapper">
-                  <span class="input-icon">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                      <path
-                        d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
-                    </svg>
-                  </span>
-                  <select id="rsvp-count" name="numberOfPeople" class="master-select icon-indent">
-                    <option value="1" selected>Số lượng: 1 người</option>
-                    <option value="2">Số lượng: 2 người</option>
-                    <option value="3">Số lượng: 3 người</option>
-                    <option value="4">Số lượng: 4 người</option>
-                    <option value="5+">Số lượng: Đi theo nhóm / Gia đình</option>
-                  </select>
+              <!-- Row 3: Số lượng tham dự (Đồng nhất hoàn toàn với Form mở đầu) -->
+              <div class="inner-count-group qv-anim-fade-up qv-delay-4" id="rsvp-count-wrapper">
+                <label class="inner-field-label">Số lượng tham dự:</label>
+                <div class="rsvp-options-grid-three">
+                  <label class="rsvp-radio-card count-style checked" id="inner-count-card-1"
+                    onclick="selectInnerCount(this, '1')">
+                    <input type="radio" name="inner-count" value="1" checked style="display:none;">
+                    <span class="count-number">1 người</span>
+                    <span class="count-desc">Đi một mình</span>
+                  </label>
+                  <label class="rsvp-radio-card count-style" id="inner-count-card-2"
+                    onclick="selectInnerCount(this, '2')">
+                    <input type="radio" name="inner-count" value="2" style="display:none;">
+                    <span class="count-number">2 người</span>
+                    <span class="count-desc">Đi cùng người thân</span>
+                  </label>
+                  <label class="rsvp-radio-card count-style" id="inner-count-card-other"
+                    onclick="selectInnerCount(this, 'other')">
+                    <input type="radio" name="inner-count" value="other" style="display:none;">
+                    <span class="count-number">Số khác</span>
+                    <span class="count-desc">Đi theo nhóm</span>
+                  </label>
                 </div>
-
-                <div class="form-col input-with-icon">
-                  <span class="input-icon">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                      <path
-                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
-                    </svg>
-                  </span>
-                  <input type="text" id="rsvp-relation" name="relation" class="master-input icon-indent"
-                    placeholder="Quý khách là (bạn bố mẹ, cô dâu...)" autocomplete="off">
+                <div id="inner-guest-other-wrap" class="other-input-block" style="display:none; margin-top: 6px;">
+                  <label for="inner-guest-other-input" class="sub-label">Nhập tổng số người tham dự:</label>
+                  <input id="inner-guest-other-input" type="number" min="1" step="1" class="master-input icon-indent"
+                    placeholder="Ví dụ: 3" oninput="syncInnerCustomCount(this.value)">
                 </div>
+                <input type="hidden" id="rsvp-count" name="numberOfPeople" value="1">
               </div>
 
-              <!-- Row 4: Lời chúc phúc gửi đến Dâu Rể -->
+              <!-- Row 4: Quý khách là -->
+              <div class="form-row-1 input-with-icon qv-anim-fade-up qv-delay-4">
+                <span class="input-icon">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+                  </svg>
+                </span>
+                <input type="text" id="rsvp-relation" name="relation" class="master-input icon-indent"
+                  placeholder="Quý khách là (bạn bố mẹ, cô dâu...)" autocomplete="off">
+              </div>
+
+              <!-- Row 5: Lời chúc phúc gửi đến Dâu Rể -->
               <div class="form-row-1 input-with-icon qv-anim-fade-up qv-delay-5">
                 <span class="input-icon">
                   <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
                     <path
                       d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z" />
-                    </svg>
+                  </svg>
                 </span>
                 <input type="text" id="rsvp-note" name="note" class="master-input icon-indent"
                   placeholder="Gửi lời chúc phúc đến Thuỳ Linh &amp; Phú Cường..." autocomplete="off">

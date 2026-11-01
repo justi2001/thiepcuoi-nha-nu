@@ -90,25 +90,32 @@ window.syncTanaToInnerRsvp = function() {
       guestOfEl.value = 'Cô Dâu';
     }
 
-    // 4. Đồng bộ Số người tham dự
+    // 4. Đồng bộ Số người tham dự sang cả 3 thẻ của Form trong thiệp
     const choice = window.tanaRsvpState.guestChoice;
-    const innerCountEl = document.getElementById('rsvp-count');
-    if (innerCountEl) {
-      if (att === 'declined') {
-        innerCountEl.value = '1';
-      } else if (choice === '1') {
-        innerCountEl.value = '1';
-      } else if (choice === '2') {
-        innerCountEl.value = '2';
-      } else if (choice === 'other') {
-        const otherInp = document.getElementById('tana-guest-other-input');
-        const num = parseInt(otherInp ? otherInp.value : '1', 10) || 1;
-        if (num >= 5) {
-          innerCountEl.value = '5+';
-        } else if (num >= 1 && num <= 4) {
-          innerCountEl.value = String(num);
-        }
-      }
+    const cCard1 = document.getElementById('inner-count-card-1');
+    const cCard2 = document.getElementById('inner-count-card-2');
+    const cCardOther = document.getElementById('inner-count-card-other');
+    const otherWrap = document.getElementById('inner-guest-other-wrap');
+    const innerOtherInp = document.getElementById('inner-guest-other-input');
+    const countInput = document.getElementById('rsvp-count');
+
+    [cCard1, cCard2, cCardOther].forEach(c => c && c.classList.remove('checked'));
+
+    if (choice === '1' && cCard1) {
+      cCard1.classList.add('checked');
+      if (otherWrap) otherWrap.style.display = 'none';
+      if (countInput) countInput.value = '1';
+    } else if (choice === '2' && cCard2) {
+      cCard2.classList.add('checked');
+      if (otherWrap) otherWrap.style.display = 'none';
+      if (countInput) countInput.value = '2';
+    } else if (choice === 'other' && cCardOther) {
+      cCardOther.classList.add('checked');
+      if (otherWrap) otherWrap.style.display = 'block';
+      const tanaOtherInp = document.getElementById('tana-guest-other-input');
+      const val = tanaOtherInp ? tanaOtherInp.value : '3';
+      if (innerOtherInp) innerOtherInp.value = val;
+      if (countInput) countInput.value = val;
     }
 
     // 5. Đồng bộ Lời chúc sang Sổ lưu bút (Section 11) & Ghi chú RSVP

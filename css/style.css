@@ -6412,3 +6412,68 @@ body.nova-cover-active {
   flex-shrink: 0;
   color: #c48e2e;
 }
+
+/* Inner RSVP Count Style (Đồng nhất với Form mở đầu) */
+.inner-count-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inner-field-label {
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #5a4a3a;
+  margin-bottom: 2px;
+}
+
+.inner-count-group .rsvp-options-grid-three {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  width: 100%;
+}
+
+.inner-count-group .rsvp-radio-card.count-style {
+  position: relative;
+  border: 1.5px solid #ebdcd5;
+  border-radius: 12px;
+  background: #ffffff;
+  padding: 12px 6px;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  text-align: center;
+  min-height: 64px;
+}
+
+.inner-count-group .rsvp-radio-card.count-style:hover {
+  border-color: #bb7895;
+  background: #fffafa;
+}
+
+.inner-count-group .rsvp-radio-card.count-style.checked {
+  border-color: #bb7895;
+  background: #fdf5f7;
+  box-shadow: 0 0 0 2px rgba(187, 120, 149, 0.16);
+}
+
+.inner-count-group .count-number {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #333333;
+}
+
+.inner-count-group .count-desc {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 11.5px;
+  color: #8c7367;
+}
+
