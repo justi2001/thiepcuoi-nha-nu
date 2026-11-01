@@ -6390,3 +6390,25 @@ body.nova-cover-active {
     /* Khoảng đệm an toàn cho thanh bottom toolbar */
   }
 }
+/* RSVP Event Info Pill */
+.rsvp-event-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(196, 142, 46, 0.07);
+  border: 1px dashed rgba(196, 142, 46, 0.35);
+  border-radius: 12px;
+  padding: 11px 16px;
+  font-size: 13.5px;
+  color: #8c5d1e;
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 0.3px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.rsvp-event-pill svg {
+  flex-shrink: 0;
+  color: #c48e2e;
+}

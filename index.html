@@ -99,87 +99,87 @@
         <div class="rsvp-card-container">
           <div id="tana-form-inner" class="rsvp-stationery-form">
 
-          <!-- 1. Họ và tên -->
-          <div class="rsvp-field">
-            <label for="rsvp-tana-name" class="rsvp-label">
-              1. Tên Quý khách: <span class="req">*</span>
-            </label>
-            <input id="rsvp-tana-name" type="text" class="rsvp-input-text" placeholder="Nhập họ và tên..."
-              autocomplete="name" maxlength="120" required>
-            <span id="tana-name-error" class="field-error" style="display:none;">Vui lòng nhập tên của bạn.</span>
-          </div>
+            <!-- 1. Họ và tên -->
+            <div class="rsvp-field">
+              <label for="rsvp-tana-name" class="rsvp-label">
+                1. Tên Quý khách: <span class="req">*</span>
+              </label>
+              <input id="rsvp-tana-name" type="text" class="rsvp-input-text" placeholder="Nhập họ và tên..."
+                autocomplete="name" maxlength="120" required>
+              <span id="tana-name-error" class="field-error" style="display:none;">Vui lòng nhập tên của bạn.</span>
+            </div>
 
-          <!-- 2. Xác nhận tham dự -->
-          <fieldset class="rsvp-field">
-            <legend class="rsvp-label">
-              2. Xác nhận tham dự tiệc: <span class="req">*</span>
-            </legend>
-            <div class="rsvp-options-vertical">
-              <label class="rsvp-radio-card checked" onclick="selectTanaAttendance(this, 'attending')">
-                <input type="radio" name="tana-attendance" value="attending" checked>
-                <div class="radio-text-col">
-                  <span class="option-title">Hân hạnh tham dự</span>
-                  <!-- <span class="option-sub">Hẹn gặp bạn trong ngày vui</span> -->
-                </div>
-              </label>
-              <label class="rsvp-radio-card" onclick="selectTanaAttendance(this, 'considering')">
-                <input type="radio" name="tana-attendance" value="considering">
-                <div class="radio-text-col">
-                  <span class="option-title">Tiếc quá! xin gửi lời chúc phúc từ xa.</span>
-                  <!-- <span class="option-sub">Bạn có thể cập nhật khi chốt được lịch</span> -->
-                </div>
-              </label>
-              <!-- <label class="rsvp-radio-card" onclick="selectTanaAttendance(this, 'declined')">
+            <!-- 2. Xác nhận tham dự -->
+            <fieldset class="rsvp-field">
+              <legend class="rsvp-label">
+                2. Xác nhận tham dự tiệc: <span class="req">*</span>
+              </legend>
+              <div class="rsvp-options-vertical">
+                <label class="rsvp-radio-card checked" onclick="selectTanaAttendance(this, 'attending')">
+                  <input type="radio" name="tana-attendance" value="attending" checked>
+                  <div class="radio-text-col">
+                    <span class="option-title">Hân hạnh tham dự</span>
+                    <!-- <span class="option-sub">Hẹn gặp bạn trong ngày vui</span> -->
+                  </div>
+                </label>
+                <label class="rsvp-radio-card" onclick="selectTanaAttendance(this, 'considering')">
+                  <input type="radio" name="tana-attendance" value="considering">
+                  <div class="radio-text-col">
+                    <span class="option-title">Tiếc quá! xin gửi lời chúc phúc từ xa.</span>
+                    <!-- <span class="option-sub">Bạn có thể cập nhật khi chốt được lịch</span> -->
+                  </div>
+                </label>
+                <!-- <label class="rsvp-radio-card" onclick="selectTanaAttendance(this, 'declined')">
                 <input type="radio" name="tana-attendance" value="declined">
                 <div class="radio-text-col">
                   <span class="option-title">Tiếc quá, mình không tham gia được</span>
                   <span class="option-sub">Gửi lời chúc phúc từ xa</span>
                 </div>
               </label> -->
-            </div>
-            <span id="tana-attendance-error" class="field-error" style="display:none;">Vui lòng chọn một phương án
-              tham dự.</span>
-          </fieldset>
+              </div>
+              <span id="tana-attendance-error" class="field-error" style="display:none;">Vui lòng chọn một phương án
+                tham dự.</span>
+            </fieldset>
 
-          <!-- 3. Số lượng người -->
-          <fieldset id="tana-guest-count-section" class="rsvp-field">
-            <legend class="rsvp-label">
-              3. Số lượng tham dự:
-            </legend>
-            <div class="rsvp-options-grid-three">
-              <label class="rsvp-radio-card count-style checked" onclick="selectTanaCount(this, '1')">
-                <input type="radio" name="tana-count" value="1" checked>
-                <span class="count-number">1 người</span>
-                <span class="count-desc">Đi một mình</span>
-              </label>
-              <label class="rsvp-radio-card count-style" onclick="selectTanaCount(this, '2')">
-                <input type="radio" name="tana-count" value="2">
-                <span class="count-number">2 người</span>
-                <span class="count-desc">Đi cùng người thân</span>
-              </label>
-              <label class="rsvp-radio-card count-style" onclick="selectTanaCount(this, 'other')">
-                <input type="radio" name="tana-count" value="other">
-                <span class="count-number">Số khác</span>
-                <span class="count-desc">Đi theo nhóm</span>
-              </label>
-            </div>
-            <div id="tana-guest-other-wrap" class="other-input-block" style="display:none;">
-              <label for="tana-guest-other-input" class="sub-label">Nhập tổng số người tham dự:</label>
-              <input id="tana-guest-other-input" type="number" min="1" step="1" class="rsvp-input-text"
-                placeholder="Ví dụ: 3">
-            </div>
-            <span id="tana-count-error" class="field-error" style="display:none;">Vui lòng nhập số người từ 1 trở
-              lên.</span>
-          </fieldset>
+            <!-- 3. Số lượng người -->
+            <fieldset id="tana-guest-count-section" class="rsvp-field">
+              <legend class="rsvp-label">
+                3. Số lượng tham dự:
+              </legend>
+              <div class="rsvp-options-grid-three">
+                <label class="rsvp-radio-card count-style checked" onclick="selectTanaCount(this, '1')">
+                  <input type="radio" name="tana-count" value="1" checked>
+                  <span class="count-number">1 người</span>
+                  <span class="count-desc">Đi một mình</span>
+                </label>
+                <label class="rsvp-radio-card count-style" onclick="selectTanaCount(this, '2')">
+                  <input type="radio" name="tana-count" value="2">
+                  <span class="count-number">2 người</span>
+                  <span class="count-desc">Đi cùng người thân</span>
+                </label>
+                <label class="rsvp-radio-card count-style" onclick="selectTanaCount(this, 'other')">
+                  <input type="radio" name="tana-count" value="other">
+                  <span class="count-number">Số khác</span>
+                  <span class="count-desc">Đi theo nhóm</span>
+                </label>
+              </div>
+              <div id="tana-guest-other-wrap" class="other-input-block" style="display:none;">
+                <label for="tana-guest-other-input" class="sub-label">Nhập tổng số người tham dự:</label>
+                <input id="tana-guest-other-input" type="number" min="1" step="1" class="rsvp-input-text"
+                  placeholder="Ví dụ: 3">
+              </div>
+              <span id="tana-count-error" class="field-error" style="display:none;">Vui lòng nhập số người từ 1 trở
+                lên.</span>
+            </fieldset>
 
-          <!-- 4. Mối quan hệ -->
-          <fieldset class="rsvp-field">
-            <legend class="rsvp-label">
-              4. Quý khách là:
-            </legend>
-            <textarea id="tana-relation-text" class="rsvp-input-text" rows="3"
-              placeholder="Quan hệ của Quý khách với bố, mẹ, cô dâu. "></textarea>
-            <!-- <div class="rsvp-options-grid-two">
+            <!-- 4. Mối quan hệ -->
+            <fieldset class="rsvp-field">
+              <legend class="rsvp-label">
+                4. Quý khách là:
+              </legend>
+              <textarea id="tana-relation-text" class="rsvp-input-text" rows="3"
+                placeholder="Quan hệ của Quý khách với bố, mẹ, cô dâu. "></textarea>
+              <!-- <div class="rsvp-options-grid-two">
               <label class="rsvp-radio-card checked" onclick="selectTanaRelation(this, 'family')">
                 <input type="radio" name="tana-relation" value="family" checked>
                 <span class="option-title">Gia đình / Người thân</span>
@@ -203,55 +203,55 @@
             </div>
             <span id="tana-relation-error" class="field-error" style="display:none;">Vui lòng chọn một phương
               án.</span> -->
-          </fieldset>
+            </fieldset>
 
-          <!-- 5. Lời chúc -->
-          <div class="rsvp-field">
-            <label for="tana-wish-text" class="rsvp-label">
-              5. Lời chúc phúc gửi đến Cô dâu &amp; Chú rể:
-            </label>
-            <textarea id="tana-wish-text" class="rsvp-input-text" rows="3"
-              placeholder="Gửi gắm những lời yêu thương và chúc phúc đến Thuỳ Linh &amp; Phú Cường..."></textarea>
+            <!-- 5. Lời chúc -->
+            <div class="rsvp-field">
+              <label for="tana-wish-text" class="rsvp-label">
+                5. Lời chúc phúc gửi đến Cô dâu &amp; Chú rể:
+              </label>
+              <textarea id="tana-wish-text" class="rsvp-input-text" rows="3"
+                placeholder="Gửi gắm những lời yêu thương và chúc phúc đến Thuỳ Linh &amp; Phú Cường..."></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <button id="tana-submit-btn" class="rsvp-submit-btn" type="button" onclick="submitTanaRsvp()">
+              GỬI PHÚC ĐÁP
+            </button>
+            <p class="rsvp-privacy-note">
+              Xin vui lòng phúc đáp trước ngày 14/11/2026!
+            </p>
           </div>
 
-          <!-- Submit Button -->
-          <button id="tana-submit-btn" class="rsvp-submit-btn" type="button" onclick="submitTanaRsvp()">
-            GỬI PHÚC ĐÁP
-          </button>
-          <p class="rsvp-privacy-note">
-            Thông tin phản hồi được dùng để gia đình chuẩn bị đón tiếp chu đáo nhất.
-          </p>
-        </div>
-
-        <!-- Success View -->
-        <div id="tana-success-view" class="rsvp-stationery-success" style="display:none;" role="status">
-          <span class="rsvp-watermark">CẢM ƠN BẠN</span>
-          <strong class="success-heading">Cảm ơn bạn! Phúc đáp đã được lưu thành công.</strong>
-          <p class="success-paragraph" id="tana-success-msg">
-            Hẹn gặp bạn tại buổi tiệc vào 11:00 ngày 17.11.2026. Sự hiện diện của bạn là niềm hạnh phúc lớn của hai
-            gia đình!
-          </p>
-          <span class="signature-couple">Thuỳ Linh &amp; Phú Cường</span>
-          <div style="margin-top: 20px;">
-            <button type="button" class="rsvp-back-bottom-btn"
-              style="background:#fff; border-color:#bb7895; color:#854762; font-size:14px; padding: 12px 28px;"
-              onclick="openWeddingInvitation(event)">
-              XEM THIỆP MỜI NGAY ✨
-            </button>
-            <p id="tana-auto-redirect-note"
-              style="margin-top: 10px; font-size: 13px; color: #854762; font-style: italic;"></p>
+          <!-- Success View -->
+          <div id="tana-success-view" class="rsvp-stationery-success" style="display:none;" role="status">
+            <span class="rsvp-watermark">CẢM ƠN BẠN</span>
+            <strong class="success-heading">Cảm ơn bạn! Phúc đáp đã được lưu thành công.</strong>
+            <p class="success-paragraph" id="tana-success-msg">
+              Hẹn gặp bạn tại buổi tiệc vào 11:00 ngày 17.11.2026. Sự hiện diện của bạn là niềm hạnh phúc lớn của hai
+              gia đình!
+            </p>
+            <span class="signature-couple">Thuỳ Linh &amp; Phú Cường</span>
+            <div style="margin-top: 20px;">
+              <button type="button" class="rsvp-back-bottom-btn"
+                style="background:#fff; border-color:#bb7895; color:#854762; font-size:14px; padding: 12px 28px;"
+                onclick="openWeddingInvitation(event)">
+                XEM THIỆP MỜI NGAY ✨
+              </button>
+              <p id="tana-auto-redirect-note"
+                style="margin-top: 10px; font-size: 13px; color: #854762; font-style: italic;"></p>
+            </div>
           </div>
         </div>
       </div>
-  </div>
 
-  <!-- Bottom Action -->
-  <div class="rsvp-footer-action">
-    <button type="button" class="rsvp-back-bottom-btn" onclick="openWeddingInvitation(event)">
-      QUAY LẠI THIỆP MỜI NHÀ GÁI
-    </button>
-  </div>
-  </main>
+      <!-- Bottom Action -->
+      <div class="rsvp-footer-action">
+        <button type="button" class="rsvp-back-bottom-btn" onclick="openWeddingInvitation(event)">
+          QUAY LẠI THIỆP MỜI NHÀ GÁI
+        </button>
+      </div>
+    </main>
   </div>
 
   <!-- Fullscreen Soft White Scene Transition Glow Overlay -->
@@ -505,6 +505,7 @@
           <div class="c-divider-mark">✦ &nbsp; · &nbsp; ✦</div>
 
           <div class="c-invite-label qv-anim-fade-up">TRÂN TRỌNG KÍNH MỜI</div>
+          <div class="c-venue-name qv-anim-fade-up  ">Quý khách</div>
           <div class="c-desc qv-anim-fade-up">Đến dự buổi tiệc chung vui cùng gia đình chúng tôi</div>
 
           <!-- English Date in DinhHon Font -->
@@ -562,8 +563,8 @@
         </div>
 
         <p class="rsvp-invitation-message qv-anim-fade-up qv-delay-1">
-          Đám cưới sẽ trọn vẹn và ý nghĩa hơn khi có sự hiện diện và chúc phúc của bạn.<br>
-          Hãy xác nhận sự có mặt của bạn để chúng mình chuẩn bị đón tiếp bạn chu đáo nhất nha
+          Đám cưới sẽ trọn vẹn và ý nghĩa hơn khi có sự hiện diện và chúc phúc của Quý khách.<br>
+          Hãy xác nhận sự có mặt của Quý khách để gia đình chuẩn bị đón tiếp thật chu đáo nhất.
         </p>
 
         <!-- Premium Luxury Wedding RSVP Card (Điểm Nhấn Hoàn Hảo - Viền Hoa Ren Thêu Trắng) -->
@@ -647,23 +648,9 @@
                 <input type="hidden" id="rsvp-attendance" name="willCome" value="Có, tôi sẽ tham dự">
               </div>
 
-              <!-- Row 3: Bạn là khách mời của ? | Số người tham dự -->
+              <!-- Row 3: Số người tham dự & Quý khách là -->
               <div class="form-row-2 qv-anim-fade-up qv-delay-4">
-                <div class="form-col input-with-icon">
-                  <span class="input-icon">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                      <path
-                        d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
-                    </svg>
-                  </span>
-                  <select id="rsvp-guest-of" name="guestOf" class="master-select icon-indent">
-                    <option value="Cô Dâu" selected>Khách mời Cô Dâu (Thuỳ Linh)</option>
-                    <option value="Chú Rể &amp; Cô Dâu">Khách mời của cả hai</option>
-                    <option value="Chú Rể">Khách mời Chú Rể (Phú Cường)</option>
-                  </select>
-                </div>
-
-                <div class="form-col input-with-icon">
+                <div class="form-col input-with-icon" id="rsvp-count-wrapper">
                   <span class="input-icon">
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
                       <path
@@ -671,28 +658,47 @@
                     </svg>
                   </span>
                   <select id="rsvp-count" name="numberOfPeople" class="master-select icon-indent">
-                    <option value="1" selected>Số người tham dự: 1 người</option>
-                    <option value="2">Số người tham dự: 2 người</option>
-                    <option value="3">Số người tham dự: 3 người</option>
-                    <option value="4">Số người tham dự: 4 người</option>
-                    <option value="5+">Số người tham dự: 5+ (Gia đình)</option>
+                    <option value="1" selected>Số lượng: 1 người</option>
+                    <option value="2">Số lượng: 2 người</option>
+                    <option value="3">Số lượng: 3 người</option>
+                    <option value="4">Số lượng: 4 người</option>
+                    <option value="5+">Số lượng: Đi theo nhóm / Gia đình</option>
                   </select>
+                </div>
+
+                <div class="form-col input-with-icon">
+                  <span class="input-icon">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                      <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+                    </svg>
+                  </span>
+                  <input type="text" id="rsvp-relation" name="relation" class="master-input icon-indent"
+                    placeholder="Quý khách là (bạn bố mẹ, cô dâu...)" autocomplete="off">
                 </div>
               </div>
 
-              <!-- Row 4: Bạn sẽ tham gia sự kiện nào ? -->
+              <!-- Row 4: Lời chúc phúc gửi đến Dâu Rể -->
               <div class="form-row-1 input-with-icon qv-anim-fade-up qv-delay-5">
                 <span class="input-icon">
                   <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
                     <path
-                      d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM7 11h5v5H7z" />
-                  </svg>
+                      d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z" />
+                    </svg>
                 </span>
-                <select id="rsvp-event-target" name="event" class="master-select icon-indent">
-                  <option value="Tiệc Cưới Nhà Gái" selected>Tham gia Tiệc Cưới Nhà Gái (Queen Bee - 17.11.2026)
-                  </option>
-                </select>
+                <input type="text" id="rsvp-note" name="note" class="master-input icon-indent"
+                  placeholder="Gửi lời chúc phúc đến Thuỳ Linh &amp; Phú Cường..." autocomplete="off">
               </div>
+
+              <!-- Tag thông tin sự kiện trang trọng -->
+              <div class="rsvp-event-pill qv-anim-fade-up qv-delay-5">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                  <path
+                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                </svg>
+                <span>Lễ Vũ Quy • 11:00 Thứ Ba 17.11.2026 • Queen Bee, 20 Láng Hạ</span>
+              </div>
+              <input type="hidden" id="rsvp-event-target" name="event" value="Lễ Vũ Quy (Queen Bee - 17.11.2026)">
 
               <!-- Submit Button (Điểm nhấn hoàn hảo) -->
               <div class="form-row-submit qv-anim-pop qv-delay-5">
@@ -722,7 +728,7 @@
               <path
                 d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2zM9 14H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8 4H7v-2h2v2zm4 4h-2v-2h2v2zm4 0h-2v-2h2v2z" />
             </svg>
-            <span id="sched-title-text">LỊCH CƯỚI NHÀ CÔ DÂU</span>
+            <span id="sched-title-text">LỊCH LỄ VU QUY</span>
           </div>
         </div>
 
@@ -816,7 +822,7 @@
         </div>
 
         <!-- 5. Date & Venue Details -->
-        <div class="tl-day-lbl qv-anim-fade-left qv-delay-3" id="tl-dyn-day">Thứ Ba</div>
+        <!-- <div class="tl-day-lbl qv-anim-fade-left qv-delay-3" id="tl-dyn-day"></div> -->
         <div class="tl-date-lbl qv-anim-pop qv-delay-3" id="tl-dyn-date">17 . 11 . 2026</div>
         <div class="tl-venue-lbl qv-anim-fade-right qv-delay-4" id="tl-dyn-venue">Tại : Tầng 2 - Trung tâm tiệc cưới
           Queen bee</div>
@@ -1215,11 +1221,12 @@
       <div class="preface-header-container">
         <h2 class="preface-heading qv-anim-fade-down">Lời Ngỏ</h2>
         <p class="preface-text qv-anim-fade-up qv-delay-1">
-          Cảm ơn bạn đã luôn dành tình cảm và dõi theo chặng đường của chúng mình.<br>
+          Cảm ơn Quý khách đã luôn dành tình cảm và dõi theo chặng đường của chúng mình.<br>
           Hành trình mới của Thuỳ Linh &amp; Phú Cường sẽ thêm phần ý nghĩa và đong đầy niềm vui khi có sự hiện diện của
-          bạn. Sự góp mặt và lời chúc phúc từ bạn là niềm vinh hạnh lớn nhất dành cho vợ chồng mình trong ngày chung
+          Quý khách. Sự góp mặt và lời chúc phúc từ Quý khách là niềm vinh hạnh lớn nhất dành cho vợ chồng mình trong
+          ngày chung
           đôi.<br>
-          Rất hân hạnh được đón tiếp bạn và gia đình!
+          Rất hân hạnh được đón tiếp Quý vị và gia đình!
         </p>
       </div>
     </section>
