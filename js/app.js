@@ -1,3 +1,40 @@
+
+// Xử lý chọn số lượng tham dự trên Form nội bộ (Đồng nhất với Form mở đầu)
+window.selectInnerCount = function(labelEl, value) {
+  const container = document.getElementById('rsvp-count-wrapper');
+  if (container) {
+    container.querySelectorAll('.rsvp-radio-card').forEach(el => el.classList.remove('checked'));
+  }
+  if (labelEl) labelEl.classList.add('checked');
+
+  const otherWrap = document.getElementById('inner-guest-other-wrap');
+  const countInput = document.getElementById('rsvp-count');
+
+  if (value === 'other') {
+    if (otherWrap) otherWrap.style.display = 'block';
+    const otherInp = document.getElementById('inner-guest-other-input');
+    if (otherInp) {
+      otherInp.focus();
+      if (countInput) countInput.value = otherInp.value || '3';
+    }
+  } else {
+    if (otherWrap) otherWrap.style.display = 'none';
+    if (countInput) countInput.value = value;
+  }
+
+  // Đồng bộ sang state form mở đầu
+  if (window.tanaRsvpState) {
+    window.tanaRsvpState.guestChoice = value;
+  }
+};
+
+window.syncInnerCustomCount = function(val) {
+  const countInput = document.getElementById('rsvp-count');
+  if (countInput) {
+    countInput.value = val || '1';
+  }
+};
+
 /**
  * QUIET - GÓI VIP (MEHAPPY.INFO) MASTER JAVASCRIPT
  * Responsive Desktop + Mobile interactive features:
