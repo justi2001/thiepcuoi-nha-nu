@@ -144,7 +144,7 @@ window.selectTanaAttendance = function(labelEl, value) {
   // Toggle guest count section if declined
   const countSection = document.getElementById('tana-guest-count-section');
   if (countSection) {
-    if (value === 'declined') {
+    if (value === 'declined' || value === 'considering') {
       countSection.style.opacity = '0.4';
       countSection.style.pointerEvents = 'none';
     } else {
@@ -237,19 +237,12 @@ window.submitTanaRsvp = async function() {
   }
 
   // Attendance
-  const attVal = window.tanaRsvpState.attendance;
-  const attError = document.getElementById('tana-attendance-error');
-  if (!attVal) {
-    if (attError) attError.style.display = 'block';
-    hasError = true;
-  } else if (attError) {
-    attError.style.display = 'none';
-  }
+  const attVal = window.tanaRsvpState.attendance || 'attending';
 
   // Count
   let finalCount = 1;
   const countError = document.getElementById('tana-count-error');
-  if (attVal !== 'declined') {
+  if (attVal === 'attending') {
     if (window.tanaRsvpState.guestChoice === 'other') {
       const otherInput = document.getElementById('tana-guest-other-input');
       const parsed = parseInt(otherInput ? otherInput.value : '', 10);
@@ -271,65 +264,41 @@ window.submitTanaRsvp = async function() {
     finalCount = 0;
   }
 
-  // Relationship
-  const relVal = window.tanaRsvpState.relationship;
-  let relNote = '';
-  const relError = document.getElementById('tana-relation-error');
-  if (!relVal) {
-    if (relError) relError.style.display = 'block';
-    hasError = true;
-  } else {
-    if (relVal === 'other') {
-      const relInput = document.getElementById('tana-relation-other-input');
-      relNote = relInput ? relInput.value.trim() : '';
-      if (!relNote) {
-        if (relError) {
-          relError.textContent = 'Vui lòng cho chúng tôi biết thêm thông tin mối quan hệ.';
-          relError.style.display = 'block';
-        }
-        hasError = true;
-      } else if (relError) {
-        relError.style.display = 'none';
-      }
-    } else if (relError) {
-      relError.style.display = 'none';
-    }
-  }
+  // Relationship (from textarea #tana-relation-text)
+  const relInput = document.getElementById('tana-relation-text') || document.getElementById('tana-relation-other-input');
+  const relVal = relInput ? relInput.value.trim() : '';
+
+  // Wishes
+  const wishInput = document.getElementById('tana-wish-text');
+  const wishVal = wishInput ? wishInput.value.trim() : '';
 
   if (hasError) return;
 
   const submitBtn = document.getElementById('tana-submit-btn');
-  const originalBtnText = submitBtn ? submitBtn.innerHTML : 'GỬI PHÚC ĐÁP';
   if (submitBtn) {
     submitBtn.disabled = true;
     submitBtn.innerHTML = 'ĐANG GỬI XÁC NHẬN...';
   }
 
-  // Text mapping for readability in database / sheet
+  // Text mapping for database / sheet
   const attendanceLabels = {
-    attending: 'Có, mình sẽ tham dự',
-    considering: 'Đang cân nhắc sắp xếp',
-    declined: 'Tiếc quá, mình không tham gia được'
+    attending: 'Hân hạnh tham dự',
+    considering: 'Tiếc quá! Xin gửi lời chúc phúc từ xa',
+    declined: 'Tiếc quá! Xin gửi lời chúc phúc từ xa'
   };
 
-  const relationLabels = {
-    family: 'Gia đình / Người thân',
-    friend: 'Bạn bè',
-    coworker: 'Đồng nghiệp',
-    other: relNote ? `Mối quan hệ khác: ${relNote}` : 'Mối quan hệ khác'
-  };
-
-  const wishInput = document.getElementById('tana-wish-text');
-  const wishVal = wishInput ? wishInput.value.trim() : '';
+  const displayAttendance = attendanceLabels[attVal] || attVal;
+  const displayGuests = (attVal === 'attending') ? String(finalCount) : '0';
+  const displayRelation = relVal || 'Khách mời';
 
   const rsvpPayload = {
     name: nameVal,
-    attendance: attendanceLabels[attVal] || attVal,
+    attendance: displayAttendance,
     guestOf: 'Cô Dâu (Thuỳ Linh)',
-    guestCount: String(finalCount),
+    guestCount: displayGuests,
     eventTarget: 'Lễ Cưới Nhà Gái (17/11/2026)',
     email: '',
-    relationship: relationLabels[relVal] || relVal,
+    relationship: displayRelation,
     note: wishVal
   };
 
@@ -342,14 +311,14 @@ window.submitTanaRsvp = async function() {
     }).catch(err => console.warn('Local API RSVP save warning:', err));
   } catch (e) {}
 
-  // 2. Gửi lên Google Sheets bằng POST JSON đúng định dạng
+  // 2. Gửi lên Google Sheets (khớp 6 cột: Thời gian, Tên, Trạng thái, Số lượng, Mối quan hệ, Lời chúc)
   if (typeof GOOGLE_SCRIPT_URL !== 'undefined' && GOOGLE_SCRIPT_URL) {
     try {
       const sheetPayload = {
         name: nameVal,
-        attendance: attendanceLabels[attVal] || attVal,
-        guests: String(finalCount),
-        relation: relationLabels[relVal] || relVal,
+        attendance: displayAttendance,
+        guests: displayGuests,
+        relation: displayRelation,
         wishes: wishVal,
         email: ''
       };
@@ -362,7 +331,7 @@ window.submitTanaRsvp = async function() {
     } catch (e) {}
   }
 
-  // 3. If guest provided a wish, also store in Wishes Guestbook
+  // 3. Store wish if provided
   if (wishVal) {
     try {
       fetch('/api/wishes', {
@@ -384,16 +353,14 @@ window.submitTanaRsvp = async function() {
     if (successView) successView.style.display = 'flex';
 
     if (successMsg) {
-      if (attVal === 'declined') {
-        successMsg.textContent = 'Cảm ơn bạn đã dành thời gian phúc đáp. Chúng mình rất trân trọng tình cảm của bạn và hy vọng sớm có dịp gặp lại!';
-      } else if (attVal === 'considering') {
-        successMsg.textContent = 'Chúng mình đã ghi nhận bạn đang cân nhắc sắp xếp. Bạn hãy liên hệ hai gia đình khi chốt được lịch nhé!';
+      if (attVal === 'considering' || attVal === 'declined') {
+        successMsg.textContent = 'Cảm ơn bạn đã dành thời gian gửi lời chúc phúc. Chúng mình rất trân trọng tình cảm của bạn và hy vọng sớm có dịp hội ngộ!';
       } else {
         successMsg.textContent = 'Hẹn gặp bạn tại buổi tiệc vào 11:00 ngày 17.11.2026. Sự hiện diện của bạn là niềm hạnh phúc lớn của hai gia đình!';
       }
     }
 
-    // Auto transition to invitation after 2.5s with countdown indicator
+    // Auto transition to invitation after 3s
     if (autoRedirectText) {
       let countdown = 3;
       autoRedirectText.textContent = `Tự động chuyển đến thiệp mời sau ${countdown}s...`;
