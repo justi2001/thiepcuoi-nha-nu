@@ -91,7 +91,7 @@ function initRandomAudioTrack() {
       try {
         bgAudio.currentTime = targetTime;
         isAudioSeekInitialized = true;
-      } catch (e) {}
+      } catch (e) { }
     }
   };
 
@@ -106,7 +106,7 @@ function initRandomAudioTrack() {
       isAudioSeekInitialized = true;
       try {
         bgAudio.currentTime = target;
-      } catch (e) {}
+      } catch (e) { }
     }
   });
 
@@ -144,7 +144,7 @@ function playCurrentTrack() {
     try {
       bgAudio.currentTime = targetTime;
       isAudioSeekInitialized = true;
-    } catch (e) {}
+    } catch (e) { }
   }
 
   const p = bgAudio.play();
@@ -154,10 +154,10 @@ function playCurrentTrack() {
         try {
           bgAudio.currentTime = targetTime;
           isAudioSeekInitialized = true;
-        } catch (e) {}
+        } catch (e) { }
       }
       updateAudioUI(true);
-    }).catch(() => {});
+    }).catch(() => { });
   }
   return Promise.resolve();
 }
@@ -302,7 +302,7 @@ function initHeroCoverAnimation() {
   const rsvpScreen = document.getElementById('tana-rsvp-screen');
   const novaCover = document.getElementById('nova-cover');
   if ((rsvpScreen && !rsvpScreen.classList.contains('is-hidden') && rsvpScreen.style.display !== 'none') ||
-      (novaCover && !novaCover.classList.contains('nova-opening') && novaCover.style.display !== 'none')) {
+    (novaCover && !novaCover.classList.contains('nova-opening') && novaCover.style.display !== 'none')) {
     return;
   }
   triggerHeroCoupleAnimation();
@@ -541,7 +541,7 @@ function switchSchedule(side) {
   // 1. Tiêu đề
   const badgeText = document.getElementById('sched-title-text');
   if (badgeText) {
-    badgeText.textContent = 'LỊCH CƯỚI NHÀ CÔ DÂU';
+    badgeText.textContent = 'LỊCH LỄ VU QUY';
   }
 
   // 2. Đánh dấu trái tim ngày 17/11 (duy nhất ngày Nhà Gái)
@@ -624,12 +624,21 @@ function selectAttendance(val) {
   radios.forEach(r => {
     if (r.value === val) r.checked = true;
   });
+  const countWrap = document.getElementById('rsvp-count-wrapper');
   if (val.includes('Có')) {
     if (cardYes) cardYes.classList.add('active');
     if (cardNo) cardNo.classList.remove('active');
+    if (countWrap) {
+      countWrap.style.opacity = '1';
+      countWrap.style.pointerEvents = 'auto';
+    }
   } else {
     if (cardYes) cardYes.classList.remove('active');
     if (cardNo) cardNo.classList.add('active');
+    if (countWrap) {
+      countWrap.style.opacity = '0.4';
+      countWrap.style.pointerEvents = 'none';
+    }
   }
 }
 
@@ -640,17 +649,20 @@ async function handleRsvpSubmit(e) {
   const willComeRadio = document.querySelector('input[name="willComeRadio"]:checked');
   const willCome = willComeRadio ? willComeRadio.value : 'Có, tôi sẽ tham dự';
 
-  const guestOfEl = document.getElementById('rsvp-guest-of');
-  const guestType = guestOfEl ? (guestOfEl.options[guestOfEl.selectedIndex]?.text || guestOfEl.value) : 'Khách mời của cả hai';
+  const isDeclined = willCome.includes('bận') || willCome.includes('tiếc') || willCome.includes('Xin lỗi');
 
   const countEl = document.getElementById('rsvp-count') || document.getElementById('rsvp-guests');
-  const quantity = countEl ? (countEl.options[countEl.selectedIndex]?.text || countEl.value) : '1';
+  let quantity = countEl ? (countEl.value || '1') : '1';
+  if (isDeclined) {
+    quantity = '0';
+  }
 
-  const eventTargetEl = document.getElementById('rsvp-event-target') || document.getElementById('rsvp-event');
-  const partyTime = eventTargetEl ? (eventTargetEl.options[eventTargetEl.selectedIndex]?.text || eventTargetEl.value) : 'Tiệc Cưới Nhà Gái';
+  const relationEl = document.getElementById('rsvp-relation');
+  const relationVal = relationEl ? relationEl.value.trim() : '';
 
   const noteEl = document.getElementById('rsvp-note');
   const note = noteEl ? noteEl.value.trim() : '';
+
   const btn = document.getElementById('rsvp-submit-btn');
   const feedback = document.getElementById('rsvp-feedback');
 
@@ -665,6 +677,9 @@ async function handleRsvpSubmit(e) {
     btn.innerHTML = '<span>Đang gửi xác nhận...</span>';
   }
 
+  const attendanceText = isDeclined ? 'Tiếc quá! Xin gửi lời chúc phúc từ xa' : 'Hân hạnh tham dự';
+  const relationText = relationVal || 'Khách mời';
+
   const payload = {
     sheetName: 'RSVP',
     action: 'rsvp',
@@ -673,14 +688,15 @@ async function handleRsvpSubmit(e) {
     status: willCome,
     willCome: willCome,
     attending: willCome,
-    guestType: guestType,
-    guestOf: guestType,
+    attendance: attendanceText,
+    guestOf: 'Cô Dâu (Thuỳ Linh)',
     quantity: quantity,
     guests: quantity,
     count: quantity,
-    partyTime: partyTime,
-    event: partyTime,
-    eventSide: partyTime,
+    relation: relationText,
+    relationship: relationText,
+    partyTime: 'Tiệc Cưới Nhà Gái (Queen Bee - 17.11.2026)',
+    event: 'Tiệc Cưới Nhà Gái (Queen Bee - 17.11.2026)',
     note: note,
     message: note,
     time: new Date().toLocaleString('vi-VN')
@@ -692,18 +708,18 @@ async function handleRsvpSubmit(e) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
-      }).catch(() => {});
+      }).catch(() => { });
     }
 
     if (GOOGLE_SCRIPT_URL) {
-      // Gửi POST JSON đúng định dạng mà Google Apps Script yêu cầu
+      // Gửi POST JSON khớp đúng 6 cột Google Sheet
       const sheetPayload = {
-        name: payload.name || payload.fullName || '',
-        attendance: payload.attendance || 'Tham dự',
-        guests: payload.guestCount || '1',
-        relation: payload.relationship || payload.relation || 'Khách mời',
-        wishes: payload.note || payload.message || '',
-        email: payload.email || ''
+        name: fullName,
+        attendance: attendanceText,
+        guests: String(quantity),
+        relation: relationText,
+        wishes: note,
+        email: ''
       };
       await fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST',
@@ -713,17 +729,25 @@ async function handleRsvpSubmit(e) {
       }).catch(err => console.warn('Google Script sync warning:', err));
     }
 
+    if (note) {
+      fetch('/api/wishes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: fullName, message: note })
+      }).catch(() => {});
+    }
+
     if (feedback) {
       feedback.className = 'form-feedback-msg success';
       feedback.textContent = '🎉 Xác nhận tham dự thành công! Cảm ơn bạn rất nhiều!';
     }
-    if (btn) btn.innerHTML = '<span>Đã xác nhận</span>';
+    if (btn) btn.innerHTML = '<span>Đã xác nhận ✨</span>';
   } catch (err) {
     if (feedback) {
       feedback.className = 'form-feedback-msg success';
       feedback.textContent = '🎉 Đã ghi nhận phản hồi của bạn! Chân thành cảm ơn!';
     }
-    if (btn) btn.innerHTML = '<span>Đã gửi</span>';
+    if (btn) btn.innerHTML = '<span>Đã gửi ✨</span>';
   }
 }
 
@@ -743,7 +767,7 @@ function saveLocalWish(item) {
     const list = getLocalWishes();
     list.unshift(item);
     localStorage.setItem('wedding_guestbook_wishes', JSON.stringify(list.slice(0, 50)));
-  } catch (e) {}
+  } catch (e) { }
 }
 
 function safeText(str) {
@@ -764,7 +788,7 @@ function applySuggestedWish(btn) {
     try {
       sessionStorage.setItem('wedding_guest_wish', textarea.value);
       localStorage.setItem('wedding_guest_wish', textarea.value);
-    } catch (e) {}
+    } catch (e) { }
   }
 }
 
@@ -805,7 +829,7 @@ async function handleWishSubmit(e) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
-      }).catch(() => {});
+      }).catch(() => { });
     }
 
     if (GOOGLE_SCRIPT_URL) {
@@ -894,7 +918,7 @@ async function loadWishes() {
           });
         }
       }
-    } catch (e) {}
+    } catch (e) { }
   }
 }
 
@@ -912,7 +936,7 @@ function preloadSingleImage(src, priority = 'high') {
   img.fetchPriority = priority;
   img.src = src;
   if ('decode' in img) {
-    img.decode().catch(() => {});
+    img.decode().catch(() => { });
   }
 }
 
@@ -1274,7 +1298,7 @@ function initLightboxZoomEvents() {
 function showPersonModal(title) {
   const modal = document.getElementById('qv-lightbox');
   let captionEl = document.getElementById('lightbox-caption');
-  
+
   if (!captionEl) {
     captionEl = document.createElement('div');
     captionEl.id = 'lightbox-caption';
@@ -1282,7 +1306,7 @@ function showPersonModal(title) {
     const container = document.querySelector('.lightbox-media-container');
     if (container) container.appendChild(captionEl);
   }
-  
+
   resetLightboxZoom();
   initLightboxZoomEvents();
   updatePersonModalImage();
@@ -1293,7 +1317,7 @@ function updatePersonModalImage() {
   const img = document.getElementById('lightbox-img');
   const counter = document.getElementById('lightbox-counter');
   const captionEl = document.getElementById('lightbox-caption');
-  
+
   if (img) img.src = currentSubAlbum[currentSubIndex];
   if (counter) counter.textContent = (currentSubIndex + 1) + ' / ' + currentSubAlbum.length;
   if (captionEl) captionEl.innerHTML = '<p class="lightbox-caption-text">' + currentSubCaption + '</p>';
@@ -1487,7 +1511,7 @@ let photoScrollObserver = null;
 
 function isPhotoElement(el) {
   return el.matches('.card-photo-wrapper, .preface-fullscreen-photo, .portrait-photo, .wishes-photo-frame, .story-photo, .alb-card') ||
-         Boolean(el.closest('.card-photo-wrapper, .preface-fullscreen-photo, .portrait-photo, .wishes-photo-frame, .story-photo'));
+    Boolean(el.closest('.card-photo-wrapper, .preface-fullscreen-photo, .portrait-photo, .wishes-photo-frame, .story-photo'));
 }
 
 function isMasterContentVisible() {
@@ -1577,7 +1601,7 @@ function initScrollReveal() {
   });
 }
 
-window.refreshScrollReveal = function() {
+window.refreshScrollReveal = function () {
   const elements = document.querySelectorAll('[class*="qv-anim-"], .qv-reveal, .qv-text-reveal');
   const isMobile = window.innerWidth <= 768;
   const bottomThreshold = isMobile ? window.innerHeight - 120 : window.innerHeight - 50;
