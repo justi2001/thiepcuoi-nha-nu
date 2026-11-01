@@ -1491,18 +1491,24 @@ body {
 }
 
 @keyframes bvgFloatLeft {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0) rotate(0deg);
   }
+
   50% {
     transform: translateY(-14px) rotate(2deg);
   }
 }
 
 @keyframes bvgFloatRight {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scaleX(-1) translateY(0) rotate(0deg);
   }
+
   50% {
     transform: scaleX(-1) translateY(-14px) rotate(-2deg);
   }
@@ -1675,7 +1681,7 @@ body {
 
 .rsvp-card-subtitle {
   font-family: var(--font-body);
-  font-size: 13px;
+  font-size: 14px;
   letter-spacing: 2px;
   color: #c48e2e;
   font-weight: 700;
@@ -3835,9 +3841,11 @@ body {
   0% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.08);
   }
+
   100% {
     transform: scale(1.03);
   }

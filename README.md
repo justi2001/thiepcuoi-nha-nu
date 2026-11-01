@@ -10,7 +10,7 @@ Thiệp cưới điện tử online Nguyễn Phú Cường & Vũ Thuỳ Linh - G
 - **Đồng hồ đếm ngược**: Tự động tính thời gian thực đến ngày cưới (Ngày, Giờ, Phút, Giây).
 - **Chương trình cưới & Dress Code**: Lộ trình timeline chi tiết kèm bảng màu trang phục dự tiệc.
 - **Love Story & Chân dung Dâu Rể**: Câu chuyện tình yêu và trích dẫn cảm xúc đóng khung nghệ thuật.
-- **Album ảnh cưới (Masonry Grid)**: Lưới 10 ảnh cưới nghệ thuật + nút Xem thêm mở toàn bộ album Lightbox vuốt chạm.
+- **Album ảnh cưới ( Masonry Grid)**: Lưới 10 ảnh cưới nghệ thuật + nút Xem thêm mở toàn bộ album Lightbox vuốt chạm.
 - **Xác nhận tham dự (RSVP)**:
   - Đồng bộ thời gian thực về Google Sheets (tự động gộp dòng Họ và tên, map đủ 7 cột A->G).
   - Tích hợp modal Admin RSVP thống kê khách đi/bận, xuất file Excel CSV, copy danh sách.

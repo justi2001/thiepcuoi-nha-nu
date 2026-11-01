@@ -147,7 +147,7 @@
 
 .rsvp-super-title {
   display: block;
-  font-size: 11.5px;
+  font-size: 16px;
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -201,7 +201,7 @@
 }
 
 .rsvp-card-sub {
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.85;
   max-width: 360px;
   margin: 0 auto 24px;
@@ -715,4 +715,3 @@ textarea.rsvp-input-text {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
-
